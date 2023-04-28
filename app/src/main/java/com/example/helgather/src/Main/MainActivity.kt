@@ -1,4 +1,4 @@
-package com.example.helgather.src
+package com.example.helgather.src.Main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

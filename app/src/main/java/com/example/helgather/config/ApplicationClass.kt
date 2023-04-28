@@ -15,6 +15,6 @@ class ApplicationClass : Application() {
     override fun onCreate() {
         super.onCreate()
         sSharedPreferences = applicationContext.getSharedPreferences("Hel_Gather_App", MODE_PRIVATE)
-
+        
     }
 }
