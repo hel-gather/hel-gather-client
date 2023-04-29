@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/btm_home"
+        android:checked="true"
+        android:enabled="true"
+        android:title="홈"
+        android:icon="@drawable/btm_home_selector"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/btm_chatting"
+        android:enabled="true"
+        android:title="채팅"
+        android:icon="@drawable/btm_chatting_selector"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/btm_post"
+        android:enabled="true"
+        android:title="모집 글"
+        android:icon="@drawable/btm_post_selector"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/btm_profile"
+        android:enabled="true"
+        android:title="프로필"
+        android:icon="@drawable/btm_profile_selector"
+        app:showAsAction="always" />
+
+</menu>
