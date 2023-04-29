@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.example.helgather.config.BaseActivity
 import com.example.helgather.databinding.ActivityLoginBinding
+import com.example.helgather.src.Main.MainActivity
 
 class LoginActivity:BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate) {
 
@@ -24,8 +25,9 @@ class LoginActivity:BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::inf
     private fun fetchLogin(){
         //로그인시 통신 후 메인화면 갈지말지 설정
         binding.btnLoginDone.setOnClickListener {
-
-
+            val intent = Intent(this@LoginActivity,MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
