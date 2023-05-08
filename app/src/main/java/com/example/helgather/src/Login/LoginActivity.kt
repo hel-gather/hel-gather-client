@@ -12,6 +12,8 @@ class LoginActivity:BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::inf
         super.onCreate(savedInstanceState)
 
         moveSignUp()
+
+        fetchLogin()
         
     }
 

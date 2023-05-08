@@ -22,6 +22,9 @@ class SignUpActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
 
         checkPattern()
 
+        binding.ibtnSignUpClose.setOnClickListener{
+            finish()
+        }
 
     }
 
