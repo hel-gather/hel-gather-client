@@ -91,6 +91,7 @@
                 android:textColor="@color/app_color"
                 android:textSize="25sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/iv_start_grow"
                 app:layout_constraintStart_toStartOf="@+id/iv_start_grow"
                 app:layout_constraintTop_toBottomOf="@+id/iv_start_grow" />
 
@@ -98,10 +99,11 @@
                 android:id="@+id/vp_start_weightUp"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tv_start_weightUp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_start_weightUp" />
 
             <TextView
@@ -113,6 +115,7 @@
                 android:textColor="@color/app_color"
                 android:textSize="25sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/vp_start_weightUp"
                 app:layout_constraintTop_toBottomOf="@+id/vp_start_weightUp" />
 
@@ -121,7 +124,8 @@
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 android:layout_marginTop="20dp"
-                app:layout_constraintStart_toStartOf="@+id/tv_start_with"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_start_with"
                 app:srcCompat="@drawable/logo" />
 
