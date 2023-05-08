@@ -17,22 +17,40 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     private fun runBottomNavi() {
         binding.btmNavMain.run {
             setOnItemSelectedListener { item ->
-                val selectedFragment: Fragment = when (item.itemId) {
-                    R.id.btm_home -> HomeFragment()
-                    R.id.btm_chatting -> ChattingFragment()
-                    R.id.btm_post -> PostFragment()
-                    R.id.btm_profile -> ProfileFragment()
-                    else -> HomeFragment()
+                val fragmentTag: String = when (item.itemId) {
+                    R.id.btm_home -> "HOME_FRAGMENT"
+                    R.id.btm_chatting -> "CHATTING_FRAGMENT"
+                    R.id.btm_post -> "POST_FRAGMENT"
+                    R.id.btm_profile -> "PROFILE_FRAGMENT"
+                    else -> "HOME_FRAGMENT"
                 }
 
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.frm_main, selectedFragment)
-                    .addToBackStack(null) // 백스택에 현재 프래그먼트를 추가
-                    .commitAllowingStateLoss()
+                var selectedFragment = supportFragmentManager.findFragmentByTag(fragmentTag)
+
+                supportFragmentManager.beginTransaction().apply {
+                    // 기존에 추가된 프래그먼트를 숨김
+                    supportFragmentManager.fragments.forEach { hide(it) }
+
+                    if (selectedFragment == null) {
+                        selectedFragment = when (item.itemId) {
+                            R.id.btm_home -> HomeFragment()
+                            R.id.btm_chatting -> ChattingFragment()
+                            R.id.btm_post -> PostFragment()
+                            R.id.btm_profile -> ProfileFragment()
+                            else -> HomeFragment()
+                        }
+                        add(R.id.frm_main, selectedFragment!!, fragmentTag)
+                    } else {
+                        // 선택된 프래그먼트를 표시
+                        show(selectedFragment!!)
+                    }
+                }.commitAllowingStateLoss()
 
                 true
             }
             selectedItemId = R.id.btm_home
         }
     }
+
+
 }
