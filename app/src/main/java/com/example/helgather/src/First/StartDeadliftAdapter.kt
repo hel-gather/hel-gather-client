@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.helgather.databinding.StartDeadliftListBinding
 
-class StartDeadliftApdater(var deadliftList : List<Int>) : RecyclerView.Adapter<StartDeadliftApdater.DeadliftViewHolder>() {
+class StartDeadliftAdapter(var deadliftList : List<Int>) : RecyclerView.Adapter<StartDeadliftAdapter.DeadliftViewHolder>() {
 
     private lateinit var binding : StartDeadliftListBinding
 

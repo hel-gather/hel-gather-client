@@ -2,11 +2,6 @@ package com.example.helgather.src.First
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.ActionMode
-import android.view.Menu
-import android.view.MenuItem
-import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
 import com.example.helgather.R
 import com.example.helgather.config.BaseActivity
@@ -31,7 +26,7 @@ class StartActivity : BaseActivity<ActivityStartBinding>(ActivityStartBinding::i
 
 
         binding.vpStartWeightUp.run {
-            adapter = StartDeadliftApdater(deadliftList)
+            adapter = StartDeadliftAdapter(deadliftList)
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
         }
 
@@ -40,12 +35,11 @@ class StartActivity : BaseActivity<ActivityStartBinding>(ActivityStartBinding::i
             val visibleTop = nsv.scrollY
             val visibleBottom = visibleTop + nsv.measuredHeight
 
-            val vpTop = binding.vpStartWeightUp.top
             val vpBottom = binding.vpStartWeightUp.bottom
 
             val position = when {
                 visibleBottom <= vpBottom -> 0
-                visibleBottom <= vpBottom + 500 -> 1
+                visibleBottom <= vpBottom + 1000 -> 1
                 else -> 2
             }
             binding.vpStartWeightUp.currentItem = position
