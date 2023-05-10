@@ -5,6 +5,7 @@
 
 
     <color name="app_color">#1437F5</color>
+    <color name="app_brighter_color">#5F76F6</color>
 
     <color name="tv_start_white">#ECECEC</color>
     <color name="btn_start_gray">#BDBDBD</color>
