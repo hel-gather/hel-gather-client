@@ -4,14 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.helgather.databinding.ChattingChatListBinding
+import com.example.helgather.databinding.ChattingRoomsListBinding
 
 class ChattingListAdapter(var chatList : List<ChattingListResult>) : RecyclerView.Adapter<ChattingListAdapter.ChatViewHolder>() {
 
-    private lateinit var binding : ChattingChatListBinding
+    private lateinit var binding : ChattingRoomsListBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
-        binding = ChattingChatListBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        binding = ChattingRoomsListBinding.inflate(LayoutInflater.from(parent.context),parent,false)
 
         return ChatViewHolder(binding)
     }
@@ -24,7 +24,7 @@ class ChattingListAdapter(var chatList : List<ChattingListResult>) : RecyclerVie
         return chatList.size
     }
 
-    inner class ChatViewHolder(val binding : ChattingChatListBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class ChatViewHolder(val binding : ChattingRoomsListBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(chatList : ChattingListResult){
             Glide.with(itemView).load(chatList.Profile).circleCrop().into(binding.ivChattingProfile)
             binding.tvChattingId.text = chatList.id

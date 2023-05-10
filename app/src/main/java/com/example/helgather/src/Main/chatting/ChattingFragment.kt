@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.helgather.R
 import com.example.helgather.config.BaseFragment
 import com.example.helgather.databinding.FragmentChattingBinding
+import com.example.helgather.src.Main.MainActivity
 
 class ChattingFragment : BaseFragment<FragmentChattingBinding>(FragmentChattingBinding::bind, R.layout.fragment_chatting) {
 
@@ -30,6 +31,12 @@ class ChattingFragment : BaseFragment<FragmentChattingBinding>(FragmentChattingB
 
         chatListRecyclerView()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val mainAct = activity as MainActivity
+        mainAct.hideBottomNavi(false)
     }
 
     //나중에 서버와의 db + 서버 통신 예정
