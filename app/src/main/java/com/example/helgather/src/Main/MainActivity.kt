@@ -1,6 +1,7 @@
 package com.example.helgather.src.Main
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.helgather.R
 import com.example.helgather.config.BaseActivity
@@ -50,6 +51,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
             selectedItemId = R.id.btm_home
         }
+    }
+
+    fun hideBottomNavi(hide: Boolean){
+        if(hide)
+            binding.btmNavMain.visibility = View.GONE
+        else
+            binding.btmNavMain.visibility = View.VISIBLE
     }
 
 
