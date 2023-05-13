@@ -1,13 +1,16 @@
 package com.example.helgather.src.Main.chatting
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.bumptech.glide.Glide
 import com.example.helgather.databinding.ChattingMineListBinding
 import com.example.helgather.databinding.ChattingOtherListBinding
 
-class ChattingChatAdapter(var userId : Int) : RecyclerView.Adapter<ChattingChatAdapter.MessageViewHolder>() {
+class ChattingChatAdapter(var chattingMessageResult: List<ChattingMessageResult>)
+    : RecyclerView.Adapter<ChattingChatAdapter.MessageViewHolder>() {
 
     private val messages = mutableListOf<ChattingMessageResult>()
 
@@ -16,8 +19,13 @@ class ChattingChatAdapter(var userId : Int) : RecyclerView.Adapter<ChattingChatA
         private const val VIEW_TYPE_OTHER = 1
     }
 
+    fun addMessage(message : ChattingMessageResult){
+        messages.add(0,message)
+        notifyItemInserted(0)
+    }
+
     override fun getItemViewType(position: Int): Int = when (messages[position].userId) {
-        userId -> VIEW_TYPE_MINE
+        0 -> VIEW_TYPE_MINE
         else -> VIEW_TYPE_OTHER
     }
 
@@ -29,7 +37,6 @@ class ChattingChatAdapter(var userId : Int) : RecyclerView.Adapter<ChattingChatA
         }
         return MessageViewHolder(binding)
     }
-
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         holder.bind(messages[position])
     }
@@ -42,10 +49,18 @@ class ChattingChatAdapter(var userId : Int) : RecyclerView.Adapter<ChattingChatA
         fun bind(chattingMessageResult: ChattingMessageResult){
             when(binding){
                 is ChattingMineListBinding ->{
-                    // 나중에 설정  
-                } 
+                    binding.tvChattingMine.text = chattingMessageResult.message
+                    binding.tvChattingMineWhen.text = chattingMessageResult.time
+                }
                 is ChattingOtherListBinding -> {
-                    //나중에 설정
+                    binding.tvChattingOtherMessage.text = chattingMessageResult.message
+                    binding.tvChattingOtherWhen.text = chattingMessageResult.time
+                    if(chattingMessageResult.isFirst){
+                        Glide.with(itemView).load(chattingMessageResult.userProfile)
+                            .circleCrop().into(binding.ivChattingOtherProfile)
+                    }else{
+                        binding.ivChattingOtherProfile.visibility = View.GONE
+                    }
                 }
             }
         }
