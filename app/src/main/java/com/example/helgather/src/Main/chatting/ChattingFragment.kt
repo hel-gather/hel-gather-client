@@ -31,6 +31,10 @@ class ChattingFragment : BaseFragment<FragmentChattingBinding>(FragmentChattingB
 
         chatListRecyclerView()
 
+        binding.tvChattingTitle.setOnClickListener {
+            parentFragmentManager.beginTransaction().add(R.id.frm_main,ChattingChatFragment()).commit()
+        }
+
     }
 
     override fun onResume() {
