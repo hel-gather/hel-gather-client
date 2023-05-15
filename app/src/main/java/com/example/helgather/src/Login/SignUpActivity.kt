@@ -7,7 +7,7 @@ import com.example.helgather.config.ApplicationClass
 import com.example.helgather.config.BaseActivity
 import com.example.helgather.databinding.ActivitySignupBinding
 import com.example.helgather.src.Main.MainActivity
-import com.example.helgather.src.Util.ErrorDialog
+import com.example.helgather.util.ErrorDialog
 
 class SignUpActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding::inflate) {
 

@@ -1,9 +1,8 @@
-package com.example.helgather.src.Util
+package com.example.helgather.util
 
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import com.example.helgather.config.ApplicationClass
 import com.example.helgather.config.ApplicationClass.Companion.sSharedPreferences
 import com.example.helgather.databinding.ErrorDialogBinding
 
