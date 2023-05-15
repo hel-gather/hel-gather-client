@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_writing_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif"
+        android:text="여기는 게시물 제목 입니다."
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_writing_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="sans-serif"
+        android:text="[댓글 갯수]"
+        android:textColor="@color/red"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/tv_writing_title"
+        app:layout_constraintTop_toTopOf="@+id/tv_writing_title" />
+
+    <TextView
+        android:id="@+id/tv_writing_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="TextView"
+        android:textColor="@color/blue"
+        app:layout_constraintStart_toStartOf="@+id/tv_writing_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_writing_title" />
+
+    <TextView
+        android:id="@+id/tv_writing_when"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="글 쓴지 언제인지"
+        app:layout_constraintStart_toEndOf="@+id/tv_writing_id"
+        app:layout_constraintTop_toTopOf="@+id/tv_writing_id" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_writing_when" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

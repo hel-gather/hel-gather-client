@@ -73,4 +73,7 @@ dependencies {
     // suspend문제 해결
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2"
+
+    //swiperefreshLayout -> 스와이프시 새로고침 설정하기 위한 레이아웃을 위해 -> 향후 예정
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 }
