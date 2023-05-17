@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit
 
 class ApplicationClass : Application() {
     //향후 BASE_URL이 나오게 된다면 추가 예정 + 추후에 레트로핏 진행 예정
-    val API_URL = ""
+    val API_URL = "test123"
 
     companion object{
         lateinit var sSharedPreferences: SharedPreferences
@@ -26,7 +26,7 @@ class ApplicationClass : Application() {
         super.onCreate()
         sSharedPreferences = applicationContext.getSharedPreferences("Hel_Gather_App", MODE_PRIVATE)
 
-        initRetrofitInstance()
+//        initRetrofitInstance()
         
     }
 
