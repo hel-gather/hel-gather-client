@@ -5,13 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.helgather.databinding.ChattingRoomsListBinding
-import com.example.helgather.src.Main.chatting.ChattingListResult
 import com.example.helgather.src.Main.chatting.models.ChatRoomResponseItem
 import com.example.helgather.util.TimeConversion
 
-class ChattingRoomAdapter(var chatList : List<ChatRoomResponseItem>) : RecyclerView.Adapter<ChattingRoomAdapter.ChatViewHolder>() {
+class ChattingRoomAdapter(var chatList : List<ChatRoomResponseItem>, private val clickListener: chatRoomClickListener<ChatRoomResponseItem>)
+    : RecyclerView.Adapter<ChattingRoomAdapter.ChatViewHolder>() {
 
     private lateinit var binding : ChattingRoomsListBinding
+
+    interface chatRoomClickListener<T>{
+        fun onRoomClick(view : ChattingRoomsListBinding, pos : Int)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
         binding = ChattingRoomsListBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -21,6 +25,10 @@ class ChattingRoomAdapter(var chatList : List<ChatRoomResponseItem>) : RecyclerV
 
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
         holder.bind(chatList[position])
+
+        holder.binding.root.setOnClickListener {
+            clickListener.onRoomClick(holder.binding,position)
+        }
     }
 
     override fun getItemCount(): Int {

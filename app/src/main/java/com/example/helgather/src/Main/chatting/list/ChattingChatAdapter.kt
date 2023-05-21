@@ -9,18 +9,20 @@ import com.bumptech.glide.Glide
 import com.example.helgather.databinding.ChattingMineListBinding
 import com.example.helgather.databinding.ChattingOtherListBinding
 import com.example.helgather.src.Main.chatting.ChattingMessageResult
+import com.example.helgather.src.Main.chatting.models.ChatMessageResponseItem
+import com.example.helgather.util.TimeConversion
 
-class ChattingChatAdapter(var chattingMessageResult: List<ChattingMessageResult>)
+class ChattingChatAdapter(var chattingMessageResult: List<ChatMessageResponseItem>)
     : RecyclerView.Adapter<ChattingChatAdapter.MessageViewHolder>() {
 
-    private val messages = mutableListOf<ChattingMessageResult>()
+    private val messages = mutableListOf<ChatMessageResponseItem>()
 
     companion object {
         private const val VIEW_TYPE_MINE = 0
         private const val VIEW_TYPE_OTHER = 1
     }
 
-    fun addMessage(message : ChattingMessageResult){
+    fun addMessage(message : ChatMessageResponseItem){
         messages.add(0,message)
         notifyItemInserted(0)
     }
@@ -47,17 +49,17 @@ class ChattingChatAdapter(var chattingMessageResult: List<ChattingMessageResult>
     }
 
     inner class MessageViewHolder(private val binding : ViewBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(chattingMessageResult: ChattingMessageResult){
+        fun bind(chatMessage: ChatMessageResponseItem){
             when(binding){
                 is ChattingMineListBinding ->{
-                    binding.tvChattingMine.text = chattingMessageResult.message
-                    binding.tvChattingMineWhen.text = chattingMessageResult.time
+                    binding.tvChattingMine.text = chatMessage.message
+                    binding.tvChattingMineWhen.text = TimeConversion.datetoTime(chatMessage.time)
                 }
                 is ChattingOtherListBinding -> {
-                    binding.tvChattingOtherMessage.text = chattingMessageResult.message
-                    binding.tvChattingOtherWhen.text = chattingMessageResult.time
-                    if(chattingMessageResult.isFirst){
-                        Glide.with(itemView).load(chattingMessageResult.userProfile)
+                    binding.tvChattingOtherMessage.text = chatMessage.message
+                    binding.tvChattingOtherWhen.text = TimeConversion.datetoTime(chatMessage.time)
+                    if(chatMessage.first){
+                        Glide.with(itemView).load(chatMessage.userProfile)
                             .circleCrop().into(binding.ivChattingOtherProfile)
                     }else{
                         binding.ivChattingOtherProfile.visibility = View.GONE
