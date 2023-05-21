@@ -1,12 +1,15 @@
-package com.example.helgather.src.Main.chatting
+package com.example.helgather.src.Main.chatting.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.helgather.databinding.ChattingRoomsListBinding
+import com.example.helgather.src.Main.chatting.ChattingListResult
+import com.example.helgather.src.Main.chatting.models.ChatRoomResponseItem
+import com.example.helgather.util.TimeConversion
 
-class ChattingListAdapter(var chatList : List<ChattingListResult>) : RecyclerView.Adapter<ChattingListAdapter.ChatViewHolder>() {
+class ChattingRoomAdapter(var chatList : List<ChatRoomResponseItem>) : RecyclerView.Adapter<ChattingRoomAdapter.ChatViewHolder>() {
 
     private lateinit var binding : ChattingRoomsListBinding
 
@@ -25,11 +28,11 @@ class ChattingListAdapter(var chatList : List<ChattingListResult>) : RecyclerVie
     }
 
     inner class ChatViewHolder(val binding : ChattingRoomsListBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(chatList : ChattingListResult){
-            Glide.with(itemView).load(chatList.Profile).circleCrop().into(binding.ivChattingProfile)
-            binding.tvChattingId.text = chatList.id
-            binding.tvChattingMessage.text = chatList.preview
-            binding.tvChattingWhen.text = chatList.time
+        fun bind(chattingRoom : ChatRoomResponseItem){
+            Glide.with(itemView).load(chattingRoom.profile).circleCrop().into(binding.ivChattingProfile)
+            binding.tvChattingId.text = chattingRoom.id
+            binding.tvChattingMessage.text = chattingRoom.preview
+            binding.tvChattingWhen.text = TimeConversion.intervalBetweenDateText(chattingRoom.time)
         }
     }
 }

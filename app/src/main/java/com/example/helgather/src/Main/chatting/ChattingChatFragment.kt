@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.helgather.R
 import com.example.helgather.config.BaseFragment
 import com.example.helgather.databinding.FragmentChattingChatBinding
 import com.example.helgather.src.Main.MainActivity
+import com.example.helgather.src.Main.chatting.list.ChattingChatAdapter
 
 class ChattingChatFragment : BaseFragment<FragmentChattingChatBinding>
     (FragmentChattingChatBinding::bind, R.layout.fragment_chatting_chat) {

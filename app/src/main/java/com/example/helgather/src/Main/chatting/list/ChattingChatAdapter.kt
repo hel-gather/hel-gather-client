@@ -1,4 +1,4 @@
-package com.example.helgather.src.Main.chatting
+package com.example.helgather.src.Main.chatting.list
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,7 @@ import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import com.example.helgather.databinding.ChattingMineListBinding
 import com.example.helgather.databinding.ChattingOtherListBinding
+import com.example.helgather.src.Main.chatting.ChattingMessageResult
 
 class ChattingChatAdapter(var chattingMessageResult: List<ChattingMessageResult>)
     : RecyclerView.Adapter<ChattingChatAdapter.MessageViewHolder>() {
