@@ -20,11 +20,18 @@ class TimeConversion {
         fun intervalBetweenDateText(beforeDate: String): String {
             //현재 시간
             val nowFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(getTime())
-            val beforeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(beforeDate)
+//            val beforeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(beforeDate)
 
-            val diffSec     = (nowFormat.time - beforeFormat.time) / 1000             //몇 초 전 -> 방금전
-            val diffMin     = (nowFormat.time - beforeFormat.time) / (60*1000)         //몇분 전
-            val diffHor     = (nowFormat.time - beforeFormat.time) / (60 * 60 * 1000)  //몇시간 전
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+            val outputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+
+
+            val date = inputFormat.parse(beforeDate)
+
+
+            val diffSec     = (nowFormat.time - date.time) / 1000             //몇 초 전 -> 방금전
+            val diffMin     = (nowFormat.time - date.time) / (60*1000)         //몇분 전
+            val diffHor     = (nowFormat.time - date.time) / (60 * 60 * 1000)  //몇시간 전
             val diffDays    = diffSec / (24 * 60 * 60)                                //몇일 전
 
             if (diffDays > 0){

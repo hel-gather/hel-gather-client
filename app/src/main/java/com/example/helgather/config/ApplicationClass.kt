@@ -10,12 +10,13 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 
 class ApplicationClass : Application() {
-    //향후 BASE_URL이 나오게 된다면 추가 예정 + 추후에 레트로핏 진행 예정
-    val API_URL = "test123"
+    //baseUrl 향후 도메인 주소로 예정
+    val API_URL = "http://13.124.19.96:8080"
 
     companion object{
         lateinit var sSharedPreferences: SharedPreferences
 
+        //향후 회원가입,로그인 생성 완료시 JWT-TOKEN발행 예정
         val JWT_Token = "JWT-TOKEN"
 
         lateinit var sRetrofit : Retrofit
@@ -26,7 +27,7 @@ class ApplicationClass : Application() {
         super.onCreate()
         sSharedPreferences = applicationContext.getSharedPreferences("Hel_Gather_App", MODE_PRIVATE)
 
-//        initRetrofitInstance()
+        initRetrofitInstance()
         
     }
 
