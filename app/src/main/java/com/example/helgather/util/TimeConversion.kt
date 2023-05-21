@@ -47,5 +47,15 @@ class TimeConversion {
                 return "방금 전"
             }
         }
+
+        fun datetoTime(date : String) : String{
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+            val date = inputFormat.parse(date)
+
+            val outputFormat = SimpleDateFormat("hh:mm")
+            val timeString = outputFormat.format(date)
+
+            return timeString
+        }
     }
 }
