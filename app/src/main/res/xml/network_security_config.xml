@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <!-- Optional: If you need to trust custom CAs, include them here -->
+            <!-- <certificates src="@raw/custom_ca" /> -->
+        </trust-anchors>
+    </base-config>
+</network-security-config>
