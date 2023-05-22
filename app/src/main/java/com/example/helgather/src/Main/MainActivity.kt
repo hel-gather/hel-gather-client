@@ -7,6 +7,7 @@ import com.example.helgather.config.BaseActivity
 import com.example.helgather.databinding.ActivityMainBinding
 import com.example.helgather.src.Main.chatting.ChattingFragment
 import com.example.helgather.src.Main.post.PostFragment
+import com.example.helgather.src.Main.profile.ProfileFragment
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
     override fun onCreate(savedInstanceState: Bundle?) {
