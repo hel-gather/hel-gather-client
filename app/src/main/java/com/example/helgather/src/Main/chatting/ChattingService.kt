@@ -6,7 +6,6 @@ import com.example.helgather.src.Main.chatting.models.ChatRoomResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.create
 
 class ChattingService(val chattingFragmentInterface: ChattingFragmentInterface) {
 
@@ -17,7 +16,11 @@ class ChattingService(val chattingFragmentInterface: ChattingFragmentInterface) 
                 call: Call<ChatRoomResponse>,
                 response: Response<ChatRoomResponse>
             ) {
-                chattingFragmentInterface.onGetChatRoomSuccess(response.body() as ChatRoomResponse)
+                if (response.isSuccessful && response.body() != null) {
+                    chattingFragmentInterface.onGetChatRoomSuccess(response.body() as ChatRoomResponse)
+                } else {
+                    chattingFragmentInterface.onGetChatRoomSuccess(ChatRoomResponse(emptyList()))
+                }
             }
 
             override fun onFailure(call: Call<ChatRoomResponse>, t: Throwable) {
@@ -26,14 +29,19 @@ class ChattingService(val chattingFragmentInterface: ChattingFragmentInterface) 
         })
     }
 
-    fun tryGetChattingMessage(id : Int){
+    fun tryGetChattingMessage(chatId : Int,userId : Int){
         val chattingRetrofitInterface = ApplicationClass.sRetrofit.create(ChattingRetrofitInterface::class.java)
-        chattingRetrofitInterface.getChatMessage(id = id).enqueue(object  : Callback<ChatMessageResponse>{
+        chattingRetrofitInterface.getChatMessage(id = chatId, userId = userId).enqueue(object  : Callback<ChatMessageResponse>{
             override fun onResponse(
                 call: Call<ChatMessageResponse>,
                 response: Response<ChatMessageResponse>
             ) {
-                chattingFragmentInterface.onGetChatMessageSuccess(response.body() as ChatMessageResponse)
+                if (response.isSuccessful && response.body() != null) {
+                    chattingFragmentInterface.onGetChatMessageSuccess(response.body() as ChatMessageResponse)
+
+                } else {
+                    chattingFragmentInterface.onGetChatMessageSuccess(ChatMessageResponse(emptyList()))
+                }
             }
 
             override fun onFailure(call: Call<ChatMessageResponse>, t: Throwable) {

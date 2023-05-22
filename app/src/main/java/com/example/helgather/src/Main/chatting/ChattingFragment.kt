@@ -12,7 +12,7 @@ import com.example.helgather.src.Main.MainActivity
 import com.example.helgather.src.Main.chatting.list.ChattingRoomAdapter
 import com.example.helgather.src.Main.chatting.models.ChatMessageResponse
 import com.example.helgather.src.Main.chatting.models.ChatRoomResponse
-import com.example.helgather.src.Main.chatting.models.ChatRoomResponseItem
+import com.example.helgather.src.Main.chatting.models.ChatRoomResult
 
 class ChattingFragment : BaseFragment<FragmentChattingBinding>(FragmentChattingBinding::bind, R.layout.fragment_chatting)
     ,ChattingFragmentInterface{
@@ -31,11 +31,11 @@ class ChattingFragment : BaseFragment<FragmentChattingBinding>(FragmentChattingB
 
     override fun onGetChatRoomSuccess(response: ChatRoomResponse) {
         binding.rvChattingList.apply {
-            adapter = ChattingRoomAdapter(response.ChatRoomResponseItem,object  : ChattingRoomAdapter.chatRoomClickListener<ChatRoomResponseItem>{
+            adapter = ChattingRoomAdapter(response.ChatRoomResult,object  : ChattingRoomAdapter.chatRoomClickListener<ChatRoomResult>{
                 override fun onRoomClick(view: ChattingRoomsListBinding, pos: Int) {
                     view.root.setOnClickListener {
                         val sSharedPref = sSharedPreferences.edit()
-                        sSharedPref.putInt("chatId",response.ChatRoomResponseItem[pos].chatId)
+                        sSharedPref.putInt("chatId",response.ChatRoomResult[pos].chatId)
                         sSharedPref.apply()
                         parentFragmentManager.beginTransaction().add(R.id.frm_main,ChattingMessageFragment()).commit()
                     }

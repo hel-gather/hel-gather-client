@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.helgather.databinding.ChattingRoomsListBinding
-import com.example.helgather.src.Main.chatting.models.ChatRoomResponseItem
+import com.example.helgather.src.Main.chatting.models.ChatRoomResult
 import com.example.helgather.util.TimeConversion
 
-class ChattingRoomAdapter(var chatList : List<ChatRoomResponseItem>, private val clickListener: chatRoomClickListener<ChatRoomResponseItem>)
+class ChattingRoomAdapter(var chatList : List<ChatRoomResult>, private val clickListener: chatRoomClickListener<ChatRoomResult>)
     : RecyclerView.Adapter<ChattingRoomAdapter.ChatViewHolder>() {
 
     private lateinit var binding : ChattingRoomsListBinding
@@ -36,7 +36,7 @@ class ChattingRoomAdapter(var chatList : List<ChatRoomResponseItem>, private val
     }
 
     inner class ChatViewHolder(val binding : ChattingRoomsListBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(chattingRoom : ChatRoomResponseItem){
+        fun bind(chattingRoom : ChatRoomResult){
             Glide.with(itemView).load(chattingRoom.profile).circleCrop().into(binding.ivChattingProfile)
             binding.tvChattingId.text = chattingRoom.id
             binding.tvChattingMessage.text = chattingRoom.preview

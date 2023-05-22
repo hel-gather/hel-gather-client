@@ -8,21 +8,20 @@ import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import com.example.helgather.databinding.ChattingMineListBinding
 import com.example.helgather.databinding.ChattingOtherListBinding
-import com.example.helgather.src.Main.chatting.ChattingMessageResult
-import com.example.helgather.src.Main.chatting.models.ChatMessageResponseItem
+import com.example.helgather.src.Main.chatting.models.ChatMessageResult
 import com.example.helgather.util.TimeConversion
 
-class ChattingChatAdapter(var chattingMessageResult: List<ChatMessageResponseItem>)
+class ChattingChatAdapter(var chattingMessageResult: List<ChatMessageResult>)
     : RecyclerView.Adapter<ChattingChatAdapter.MessageViewHolder>() {
 
-    private val messages = mutableListOf<ChatMessageResponseItem>()
+    private val messages = mutableListOf<ChatMessageResult>()
 
     companion object {
         private const val VIEW_TYPE_MINE = 0
         private const val VIEW_TYPE_OTHER = 1
     }
 
-    fun addMessage(message : ChatMessageResponseItem){
+    fun addMessage(message : ChatMessageResult){
         messages.add(0,message)
         notifyItemInserted(0)
     }
@@ -49,7 +48,7 @@ class ChattingChatAdapter(var chattingMessageResult: List<ChatMessageResponseIte
     }
 
     inner class MessageViewHolder(private val binding : ViewBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(chatMessage: ChatMessageResponseItem){
+        fun bind(chatMessage: ChatMessageResult){
             when(binding){
                 is ChattingMineListBinding ->{
                     binding.tvChattingMine.text = chatMessage.message

@@ -12,7 +12,6 @@ import com.example.helgather.databinding.FragmentChattingChatBinding
 import com.example.helgather.src.Main.MainActivity
 import com.example.helgather.src.Main.chatting.list.ChattingChatAdapter
 import com.example.helgather.src.Main.chatting.models.ChatMessageResponse
-import com.example.helgather.src.Main.chatting.models.ChatMessageResponseItem
 import com.example.helgather.src.Main.chatting.models.ChatRoomResponse
 
 class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
@@ -46,7 +45,7 @@ class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
 
         val chatId = ApplicationClass.sSharedPreferences.getInt("chatId",0)
 
-        ChattingService(this@ChattingMessageFragment).tryGetChattingMessage(chatId)
+        ChattingService(this@ChattingMessageFragment).tryGetChattingMessage(chatId = 1, userId = 1)
 
 
     }
@@ -66,7 +65,7 @@ class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
     override fun onGetChatRoomFailure(message: String) {}
 
     override fun onGetChatMessageSuccess(response: ChatMessageResponse) {
-        val chatAdapter = ChattingChatAdapter(response.ChatMessageResponseItem)
+        val chatAdapter = ChattingChatAdapter(response.ChatMessageResult)
         binding.rvChattingChat.apply {
             adapter = chatAdapter
             layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,true)
@@ -78,7 +77,7 @@ class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
         })
 
         //테스트 데이터 추가
-        response.ChatMessageResponseItem.forEach { viewModel.addMessage(it) }
+        response.ChatMessageResult.forEach { viewModel.addMessage(it) }
     }
 
     override fun onGetChatMessageFailure(message: String) {

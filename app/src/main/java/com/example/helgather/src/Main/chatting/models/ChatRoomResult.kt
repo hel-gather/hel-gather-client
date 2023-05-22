@@ -1,6 +1,6 @@
 package com.example.helgather.src.Main.chatting.models
 
-data class ChatRoomResponseItem(
+data class ChatRoomResult(
     val chatId: Int,
     val id: String,
     val preview: String,
