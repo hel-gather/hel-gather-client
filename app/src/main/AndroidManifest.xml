@@ -35,14 +35,18 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-
-        <activity android:name=".src.First.StartActivity"
+        <activity android:name=".src.First.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+
+        <activity android:name=".src.First.StartActivity"
+            android:exported="false">
         </activity>
         <activity
             android:name=".src.Login.LoginActivity"
