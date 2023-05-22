@@ -101,4 +101,9 @@ dependencies {
     //exoplayer
     implementation 'com.google.android.exoplayer:exoplayer:2.18.7'
 
+    //Android Jetpack Navigation 라이브러리에 대한 의존성을 추가
+    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
+    implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
+
+
 }

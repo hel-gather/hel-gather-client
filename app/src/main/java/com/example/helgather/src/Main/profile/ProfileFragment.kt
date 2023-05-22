@@ -5,6 +5,7 @@ import android.view.View
 import com.example.helgather.R
 import com.example.helgather.config.BaseFragment
 import com.example.helgather.databinding.FragmentProfileBinding
+import com.example.helgather.src.Main.profile.list.ProfileTabAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::bind, R.layout.fragment_profile) {
@@ -14,8 +15,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         tabLayoutControl()
 
     }
-
-
 
     private fun tabLayoutControl(){
         binding.vpProfile.apply {
