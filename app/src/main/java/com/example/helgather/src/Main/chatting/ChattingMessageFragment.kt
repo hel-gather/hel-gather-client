@@ -1,5 +1,6 @@
 package com.example.helgather.src.Main.chatting
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,28 +15,42 @@ import com.example.helgather.databinding.FragmentChattingChatBinding
 import com.example.helgather.src.Main.MainActivity
 import com.example.helgather.src.Main.chatting.list.ChattingChatAdapter
 import com.example.helgather.src.Main.chatting.models.ChatMessageResponse
+import com.example.helgather.src.Main.chatting.models.ChatMessageResult
 import com.example.helgather.src.Main.chatting.models.ChatRoomResponse
+import okhttp3.OkHttpClient
+import ua.naiksoftware.stomp.Stomp
+import ua.naiksoftware.stomp.StompClient
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
     (FragmentChattingChatBinding::bind, R.layout.fragment_chatting_chat), ChattingFragmentInterface {
 
+
+    private val stompManager: StompManager = StompManager()
+    private lateinit var mStompClient: StompClient
+    val chatId = ApplicationClass.sSharedPreferences.getInt("chatId",1) // 0임시임
+    val userId = ApplicationClass.sSharedPreferences.getInt("userId",2)
     private val viewModel: ChatViewModel by viewModels()
 
+    @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
-
-        val chatId = ApplicationClass.sSharedPreferences.getInt("chatId",0) // 0임시임
-
         ChattingService(this@ChattingMessageFragment).tryGetChattingMessage(chatId = 1, userId = 2)
 
+        // mStompClient 초기화
+        mStompClient = stompManager.connectStomp(chatId)
 
+        // 메시지를 받을 때의 Listener를 설정
+        mStompClient.topic("/sub/chatroom/$chatId").subscribe { topicMessage ->
+            // 메시지를 받았을 때의 동작을 여기에 작성합니다.
+            viewModel.addMessageFromJson(topicMessage.payload)
+        }
 
-
+        sendMessage()
     }
-
-
 
     override fun onResume() {
         super.onResume()
@@ -44,6 +59,7 @@ class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
         mainAct.hideBottomNavi(true)
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun sendMessage(){
         binding.edtChatMessage.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -60,10 +76,14 @@ class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
         })
         binding.ivChatSend.setOnClickListener {
             val message = binding.edtChatMessage.text.toString()
-            viewModel.sendMessage(message)
+            val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+            val currentTime = Date()
+            val formattedTime = outputFormat.format(currentTime)
+            viewModel.addMessage(ChatMessageResult(first = false, message,formattedTime,1,0))
             binding.edtChatMessage.text.clear()
+            stompManager.sendMessage(1, userId = 2 ,message,formattedTime,0,false)
         }
-        viewModel.connectToServer()
+
     }
 
 

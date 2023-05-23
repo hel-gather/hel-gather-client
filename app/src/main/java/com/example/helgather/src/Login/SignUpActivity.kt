@@ -172,6 +172,7 @@ class SignUpActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
     }
 
     override fun onPostJoinSuccess(response: PostSignUpResponse) {
+        showToastMessage("회원가입에 성공하셨습니다!")
         finish() //왜냐 액티비티에서 전달할때 finish하지 않앗기 때문에 로그인 창이 다시 onResume이 됨.
     }
 

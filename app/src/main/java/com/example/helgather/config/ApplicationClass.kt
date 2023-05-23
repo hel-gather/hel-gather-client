@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit
 
 class ApplicationClass : Application() {
     //baseUrl 향후 도메인 주소로 예정
-    val API_URL = "http://13.124.19.96:8080"
+    val API_URL = "http://13.124.19.96"
 
     //채팅과 같은 STOMP URL 연동 작업
     val STOMP_URL ="ws://13.124.19.96:8080"
