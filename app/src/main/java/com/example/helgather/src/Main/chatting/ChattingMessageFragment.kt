@@ -1,6 +1,8 @@
 package com.example.helgather.src.Main.chatting
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -19,33 +21,16 @@ class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
 
     private val viewModel: ChatViewModel by viewModels()
 
-
-
-//    val chatList = listOf(ChattingMessageResult(0,R.drawable.ic_profile_me,"이것은 메세지 입니다~~~~~","시간테스트",true),
-//        ChattingMessageResult(0,R.drawable.ic_profile_me,"이것은 메세지 입니다~~~~~","시간테스트",false),
-//        ChattingMessageResult(0,R.drawable.ic_profile_me,"이것은 메세지 입니다~~~~~","시간테스트",false),
-//        ChattingMessageResult(1,R.drawable.ic_profile_me,"이것은 메세지 입니다~~~~~","시간테스트",true),
-//        ChattingMessageResult(1,R.drawable.ic_profile_me,"이것은 메세지 입니다~~~~~","시간테스트",false),
-//        ChattingMessageResult(1,R.drawable.ic_profile_me,"이것은 메세지 입니다~~~~~","시간테스트",false),
-//        ChattingMessageResult(0,R.drawable.ic_profile_me,"이것은 메세지 입니다~~~~~","시간테스트",true),
-//        ChattingMessageResult(0,R.drawable.ic_profile_me,"이것은 메세지 입니다~~~~~","시간테스트",true),
-//        ChattingMessageResult(1,R.drawable.ic_profile_me,"이것은 메세지 입니다~~~~~","시간테스트",true),
-//        ChattingMessageResult(1,R.drawable.ic_profile_me,"이것은 메세지 입니다~~~~~","시간테스트",false),
-//        ChattingMessageResult(1,R.drawable.ic_profile_me,"이것은 메세지 입니다~~~~~","시간테스트",false),
-//        ChattingMessageResult(0,R.drawable.ic_profile_me,"이것은 메세지 입니다~~~~~","시간테스트",true),
-//        ChattingMessageResult(0,R.drawable.ic_profile_me,"이것은 메세지 입니다~~~~~","시간테스트",false),
-//        ChattingMessageResult(1,R.drawable.ic_profile_me,"이것은 메세지 입니다~~~~~","시간테스트",true),
-//        ChattingMessageResult(1,R.drawable.ic_profile_me,"이것은 메세지 입니다~~~~~","시간테스트",false),
-//        ChattingMessageResult(0,R.drawable.ic_profile_me,"이것은 메세지 입니다~~~~~","시간테스트",true))
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
 
-        val chatId = ApplicationClass.sSharedPreferences.getInt("chatId",0)
+        val chatId = ApplicationClass.sSharedPreferences.getInt("chatId",0) // 0임시임
 
-        ChattingService(this@ChattingMessageFragment).tryGetChattingMessage(chatId = 1, userId = 1)
+        ChattingService(this@ChattingMessageFragment).tryGetChattingMessage(chatId = 1, userId = 2)
+
+
 
 
     }
@@ -57,6 +42,28 @@ class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
         //바텀네비게이션 바 숨김
         val mainAct = activity as MainActivity
         mainAct.hideBottomNavi(true)
+    }
+
+    private fun sendMessage(){
+        binding.edtChatMessage.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val text = s.toString()
+                binding.ivChatSend.isEnabled = text.isNotEmpty()
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+        binding.ivChatSend.setOnClickListener {
+            val message = binding.edtChatMessage.text.toString()
+            viewModel.sendMessage(message)
+            binding.edtChatMessage.text.clear()
+        }
+        viewModel.connectToServer()
     }
 
 

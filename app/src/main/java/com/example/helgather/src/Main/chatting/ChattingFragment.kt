@@ -37,7 +37,7 @@ class ChattingFragment : BaseFragment<FragmentChattingBinding>(FragmentChattingB
                         val sSharedPref = sSharedPreferences.edit()
                         sSharedPref.putInt("chatId",response.ChatRoomResult[pos].chatId)
                         sSharedPref.apply()
-                        parentFragmentManager.beginTransaction().add(R.id.frm_main,ChattingMessageFragment()).commit()
+                        parentFragmentManager.beginTransaction().replace(R.id.frm_main,ChattingMessageFragment()).addToBackStack("Chatting").commit()
                     }
                 }
             })
