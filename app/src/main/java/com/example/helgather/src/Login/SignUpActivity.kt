@@ -24,8 +24,8 @@ import java.util.Calendar
 class SignUpActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding::inflate), LoginInterface{
 
 
-    //비밀번호 패턴 체킹 -> 8자리 이상과 문자와 숫자의 조합
-    private val passwordPattern = Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}\$")
+    //비밀번호 패턴 체킹 -> 8자리 이상과 소,대문자
+    val passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#\$%^&*()_+\\-=[\\\\]{};':\"\\\\|,.<>\\\\/?]).{8,}\$".toRegex()
     private val cal = Calendar.getInstance()
     private var birthYear = cal.get(Calendar.YEAR)
     private var birthMonth = cal.get(Calendar.MONTH)
@@ -61,22 +61,25 @@ class SignUpActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
             password = binding.edtSignUpPassword.text.toString()
             passwordTwice = binding.edtSignUpPasswordTwice.text.toString()
             birthDate = binding.tvSignUpBirth.text.toString()
-            birthYear = birthDate.substring(0, 4).toInt()
-            birthMonth = birthDate.substring(5,7).toInt()
-            birthDay = birthDate.substring(8,10).toInt()
+            if(birthDate.isNotEmpty()){
+                birthYear = birthDate.substring(0, 4).toInt()
+                birthMonth = birthDate.substring(5,7).toInt()
+                birthDay = birthDate.substring(8,10).toInt()
+            }
 
             val passwordCheck = binding.edtSignUpPassword.text.toString()
             if(!isValidBirthDate(birthDate)) {
                 errorDialogStep("올바른 생년월일 형식을 확인하고\n 생년월일이 유효한지 확인해주세요.")
                 binding.tvSignUpBirth.text= ""
             }else if(!passwordCheck.matches(passwordPattern)){
-                errorDialogStep("올바른 패스워드 형식을 입력하세요. \n 6자 이상과 영문,숫자를 포함해주세요.")
+                errorDialogStep("비밀번호는 소문자, 대문자, 숫자, 특수문자를\n 각각 하나 이상 포함한 8자 이상이어야 합니다.")
             }else if(!isPhoneNumberValid(phoneNumber)){
                 errorDialogStep("올바른 전화번호 형식을 입력해주세요.")
             }else if (password != passwordTwice){
                 errorDialogStep(("패스워드가 일치하지 않습니다."))
             }else{  //클라이언트 딴에서 처리를 하고 이제 가입 통신을 함
-                val signUpRequest = PostSignUpRequest(birthDay,birthMonth,birthYear,nickname,password,phoneNumber,name)
+                val signUpRequest = PostSignUpRequest(name,phoneNumber,nickname,password,birthYear,birthMonth,birthDay)
+                Log.d("signUptest","$name $phoneNumber $nickname $password $birthYear $birthMonth $birthDay")
                 LoginService(this@SignUpActivity).tryPostSignUp(signUpRequest)
             }
         }
@@ -134,14 +137,14 @@ class SignUpActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
 
                 if (digits.length >= 3) {
                     formattedText.append(digits.substring(0, 3))
-                    if (digits.length >= 6) {
+                    if (digits.length >= 7) {
                         formattedText.append("-")
-                        formattedText.append(digits.substring(3, 6))
-                        if (digits.length >= 10) {
+                        formattedText.append(digits.substring(3, 7))
+                        if (digits.length >= 11) {
                             formattedText.append("-")
-                            formattedText.append(digits.substring(6, 10))
+                            formattedText.append(digits.substring(7, 11))
                         } else {
-                            formattedText.append(digits.substring(6))
+                            formattedText.append(digits.substring(7))
                         }
                     } else {
                         formattedText.append(digits.substring(3))
@@ -172,8 +175,15 @@ class SignUpActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
     }
 
     override fun onPostJoinSuccess(response: PostSignUpResponse) {
-        showToastMessage("회원가입에 성공하셨습니다!")
-        finish() //왜냐 액티비티에서 전달할때 finish하지 않앗기 때문에 로그인 창이 다시 onResume이 됨.
+        if(response.code == 200){
+            Log.d("signUp","${response.postSignUpResult}")
+            finish() //왜냐 액티비티에서 전달할때 finish하지 않앗기 때문에 로그인 창이 다시 onResume이 됨.
+        }
+        else{
+            Log.d("signUp","200이아니야 ${response.message}")
+            errorDialogStep(response.message.toString())
+        }
+
     }
 
     override fun onPostJoinFailure(message: String) {
