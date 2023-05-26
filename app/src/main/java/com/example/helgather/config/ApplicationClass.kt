@@ -53,5 +53,6 @@ class ApplicationClass : Application() {
             .addConverterFactory(GsonConverterFactory.create())
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
+
     }
 }

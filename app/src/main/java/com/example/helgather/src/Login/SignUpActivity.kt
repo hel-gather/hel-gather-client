@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import com.example.helgather.config.ApplicationClass
 import com.example.helgather.config.ApplicationClass.Companion.sSharedPreferences
 import com.example.helgather.config.BaseActivity
+import com.example.helgather.config.BaseResponse
 import com.example.helgather.databinding.ActivitySignupBinding
 import com.example.helgather.src.Login.model.PostSignUpRequest
 import com.example.helgather.src.Login.model.PostSignUpResponse
@@ -20,7 +21,6 @@ import com.example.helgather.util.ErrorDialog
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
-
 class SignUpActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding::inflate), LoginInterface{
 
 
@@ -174,7 +174,7 @@ class SignUpActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
         return regex.matches(phoneNumber)
     }
 
-    override fun onPostJoinSuccess(response: PostSignUpResponse) {
+    override fun onPostSignUpSuccess(response: PostSignUpResponse) {
         if(response.code == 200){
             Log.d("signUp","${response.postSignUpResult}")
             finish() //왜냐 액티비티에서 전달할때 finish하지 않앗기 때문에 로그인 창이 다시 onResume이 됨.
@@ -183,10 +183,9 @@ class SignUpActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
             Log.d("signUp","200이아니야 ${response.message}")
             errorDialogStep(response.message.toString())
         }
-
     }
 
-    override fun onPostJoinFailure(message: String) {
+    override fun onPostSignUpFailure(message: String) {
         showToastMessage("회원 가입 실패 사유 : $message")
     }
 }

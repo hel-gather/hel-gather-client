@@ -1,5 +1,6 @@
 package com.example.helgather.src.Login
 
+import com.example.helgather.config.BaseResponse
 import com.example.helgather.src.Login.model.PostSignUpResponse
 
 interface LoginInterface {
@@ -8,7 +9,7 @@ interface LoginInterface {
 //
 //    fun onPostLoginFailure(message : String)
 
-    fun onPostJoinSuccess(response: PostSignUpResponse)
+    fun onPostSignUpSuccess(response: PostSignUpResponse)
 
-    fun onPostJoinFailure(message: String)
+    fun onPostSignUpFailure(message: String)
 }

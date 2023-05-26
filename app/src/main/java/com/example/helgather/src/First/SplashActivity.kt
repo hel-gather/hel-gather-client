@@ -21,7 +21,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
 
 
         Handler(Looper.getMainLooper()).postDelayed({
-            if(autoLogin == 1){
+            startActivity(Intent(this,MainActivity::class.java))
+            if(autoLogin == 0){
                 startActivity(Intent(this, LoginActivity::class.java))
             }else{
                 startActivity(Intent(this,MainActivity::class.java))
