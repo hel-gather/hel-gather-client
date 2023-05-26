@@ -3,28 +3,28 @@ package com.example.helgather.src.Main.chatting.list
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import com.example.helgather.databinding.ChattingMineListBinding
 import com.example.helgather.databinding.ChattingOtherListBinding
+import com.example.helgather.src.Main.chatting.ChatViewModel
 import com.example.helgather.src.Main.chatting.models.ChatMessageResult
 import com.example.helgather.util.TimeConversion
 
-class ChattingChatAdapter(var chattingMessageResult: List<ChatMessageResult>)
+class ChattingChatAdapter(var messages: MutableList<ChatMessageResult>)
     : RecyclerView.Adapter<ChattingChatAdapter.MessageViewHolder>() {
+//
+//    private val messages = mutableListOf<ChatMessageResult>()
 
-    private val messages = mutableListOf<ChatMessageResult>()
 
     companion object {
         private const val VIEW_TYPE_MINE = 0
         private const val VIEW_TYPE_OTHER = 1
     }
 
-    fun addMessage(message : ChatMessageResult){
-        messages.add(0,message)
-        notifyItemInserted(0)
-    }
+
 
     override fun getItemViewType(position: Int): Int = when (messages[position].userId) {
         0 -> VIEW_TYPE_MINE
@@ -46,7 +46,6 @@ class ChattingChatAdapter(var chattingMessageResult: List<ChatMessageResult>)
     override fun getItemCount(): Int {
         return messages.size
     }
-
     inner class MessageViewHolder(private val binding : ViewBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(chatMessage: ChatMessageResult){
             when(binding){
@@ -68,4 +67,40 @@ class ChattingChatAdapter(var chattingMessageResult: List<ChatMessageResult>)
         }
     }
 
+    fun addMessage(message : ChatMessageResult){
+        messages.add(0,message)
+        notifyItemInserted(0)
+    }
+
+    fun submitList(newList: List<ChatMessageResult>) {
+        val diffResult = DiffUtil.calculateDiff(DiffCallback(messages, newList))
+        diffResult.dispatchUpdatesTo(this)
+        messages = newList.toMutableList() // 기존 리스트 업데이트
+    }
+
+    class DiffCallback(private val oldList: List<ChatMessageResult>, private val newList: List<ChatMessageResult>) : DiffUtil.Callback() {
+
+        override fun getOldListSize(): Int {
+            return oldList.size
+        }
+
+        override fun getNewListSize(): Int {
+            return newList.size
+        }
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            val oldItem = oldList[oldItemPosition]
+            val newItem = newList[newItemPosition]
+            return oldItem.message == newItem.message // id를 기준으로 아이템이 동일한지 비교
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            val oldItem = oldList[oldItemPosition]
+            val newItem = newList[newItemPosition]
+            return oldItem == newItem // 아이템의 내용이 동일한지 비교 (equals 메서드 호출)
+        }
+    }
+
 }
+
+

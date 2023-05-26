@@ -2,6 +2,7 @@ package com.example.helgather.src.Main.chatting
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.example.helgather.config.ApplicationClass.Companion.sSharedPreferences
 import com.example.helgather.src.Main.chatting.models.ChatMessageResult
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
@@ -11,6 +12,7 @@ import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.StompClient
+import ua.naiksoftware.stomp.dto.StompHeader
 
 class StompManager {
 
@@ -28,8 +30,15 @@ class StompManager {
 
         // StompClient를 생성하고 설정합니다.
         mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://13.124.19.96:8080/ws")
-        mStompClient.connect()
+        val headers = mutableMapOf<String, String>()
+        val authorization = sSharedPreferences.getString("Authorization","")
+        headers["Authorization"] = "Bearer $authorization"
 
+        val stompHeaders = headers.map { (key, value) ->
+            StompHeader(key, value)
+        }
+
+        mStompClient.connect(stompHeaders)
         return mStompClient
     }
 
@@ -49,6 +58,16 @@ class StompManager {
                 "first": $first
             }
         """.trimIndent()
+
+        val headers = mutableMapOf<String, String>()
+        val authorization = sSharedPreferences.getString("Authorization","")
+        headers["Authorization"] = "Bearer $authorization"
+
+        val stompHeaders = headers.map { (key, value) ->
+            StompHeader(key, value)
+        }
+
+        mStompClient.connect(stompHeaders)
 
         // 메시지를 보냅니다.
         mStompClient.send("/pub/chatroom/$chatId", jsonMessage).subscribe()

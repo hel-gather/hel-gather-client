@@ -1,5 +1,6 @@
 package com.example.helgather.src.Main.chatting
 
+import android.util.Log
 import com.example.helgather.config.ApplicationClass
 import com.example.helgather.src.Main.chatting.models.ChatMessageResponse
 import com.example.helgather.src.Main.chatting.models.ChatRoomResponse
@@ -16,6 +17,7 @@ class ChattingService(val chattingFragmentInterface: ChattingFragmentInterface) 
                 call: Call<ChatRoomResponse>,
                 response: Response<ChatRoomResponse>
             ) {
+                Log.d("chatting","${response.body()?.message} ${response.body()?.isSuccess} ${response.body()?.code}")
                 if (response.isSuccessful && response.body() != null) {
                     chattingFragmentInterface.onGetChatRoomSuccess(response.body() as ChatRoomResponse)
                 } else {
@@ -38,8 +40,8 @@ class ChattingService(val chattingFragmentInterface: ChattingFragmentInterface) 
             ) {
                 if (response.isSuccessful && response.body() != null) {
                     chattingFragmentInterface.onGetChatMessageSuccess(response.body() as ChatMessageResponse)
-
                 } else {
+                    Log.d("messageTest", response.errorBody().toString())
                     chattingFragmentInterface.onGetChatMessageSuccess(ChatMessageResponse(emptyList()))
                 }
             }
