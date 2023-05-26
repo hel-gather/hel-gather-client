@@ -33,7 +33,7 @@
         app:srcCompat="@drawable/logo" />
 
     <EditText
-        android:id="@+id/edt_login_email"
+        android:id="@+id/edt_login_nickname"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -41,7 +41,7 @@
         android:layout_marginEnd="15dp"
         android:background="@drawable/rectangle_border_gray"
         android:ems="10"
-        android:hint="이메일"
+        android:hint="닉네임 (ID)"
         android:inputType="textEmailAddress"
         android:padding="10dp"
         android:textColorHint="@color/edt_hint_gray"
@@ -66,7 +66,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_login_email" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_login_nickname" />
 
     <CheckBox
         android:id="@+id/cb_login_autoLogin"

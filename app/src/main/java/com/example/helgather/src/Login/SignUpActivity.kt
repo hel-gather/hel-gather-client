@@ -14,6 +14,7 @@ import com.example.helgather.config.ApplicationClass.Companion.sSharedPreference
 import com.example.helgather.config.BaseActivity
 import com.example.helgather.config.BaseResponse
 import com.example.helgather.databinding.ActivitySignupBinding
+import com.example.helgather.src.Login.model.PostLoginResponse
 import com.example.helgather.src.Login.model.PostSignUpRequest
 import com.example.helgather.src.Login.model.PostSignUpResponse
 import com.example.helgather.src.Main.MainActivity
@@ -176,11 +177,9 @@ class SignUpActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
 
     override fun onPostSignUpSuccess(response: PostSignUpResponse) {
         if(response.code == 200){
-            Log.d("signUp","${response.postSignUpResult}")
             finish() //왜냐 액티비티에서 전달할때 finish하지 않앗기 때문에 로그인 창이 다시 onResume이 됨.
         }
         else{
-            Log.d("signUp","200이아니야 ${response.message}")
             errorDialogStep(response.message.toString())
         }
     }
@@ -188,4 +187,7 @@ class SignUpActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
     override fun onPostSignUpFailure(message: String) {
         showToastMessage("회원 가입 실패 사유 : $message")
     }
+
+    override fun onPostLoginSuccess(response: PostLoginResponse) {}
+    override fun onPostLoginFailure(message: String) {}
 }

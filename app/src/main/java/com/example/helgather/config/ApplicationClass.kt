@@ -19,8 +19,8 @@ class ApplicationClass : Application() {
     companion object{
         lateinit var sSharedPreferences: SharedPreferences
 
-        //향후 회원가입,로그인 생성 완료시 JWT-TOKEN발행 예정
-        val JWT_Token = "JWT-TOKEN"
+        //향후 회원가입,로그인 생성 완료시 JWT-TOKEN발행 예정 -> 연동 완료
+        val JWT_Token = "Authorization"
 
         lateinit var sRetrofit : Retrofit
 

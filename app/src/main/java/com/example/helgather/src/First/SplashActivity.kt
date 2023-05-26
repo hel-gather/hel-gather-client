@@ -16,19 +16,19 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val autoLogin = sSharedPreferences.getInt("autoLogin",0)
+        val autoLogin = sSharedPreferences.getBoolean("autoLogin",false)
 
 
 
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(Intent(this,MainActivity::class.java))
-            if(autoLogin == 0){
-                startActivity(Intent(this, LoginActivity::class.java))
-            }else{
+            if(autoLogin){
                 startActivity(Intent(this,MainActivity::class.java))
+                finish()
+            }else{
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
             }
-
-            finish()
         }, 1000)
     }
 }
