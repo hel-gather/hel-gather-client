@@ -11,6 +11,7 @@ import com.example.helgather.config.ApplicationClass.Companion.sSharedPreference
 import com.example.helgather.config.BaseFragment
 import com.example.helgather.databinding.FragmentProfileAuthBinding
 import com.example.helgather.src.Main.profile.list.ProfileAuthAdapter
+import com.example.helgather.src.Main.profile.model.GetSBDResponse
 import com.example.helgather.src.Main.profile.model.GetTodayExerciseResponse
 import com.example.helgather.src.Main.profile.model.PostTodayExerciseResponse
 import com.example.helgather.util.GridSpacingItemDecoration
@@ -45,5 +46,11 @@ class ProfileAuthFragment : BaseFragment<FragmentProfileAuthBinding> (FragmentPr
     }
 
     override fun onPostTodayExerciseFailure(message: String) {
+    }
+
+    override fun onGetSBDSuccess(response: GetSBDResponse) {
+    }
+
+    override fun onGetSBDFailure(message: String) {
     }
 }

@@ -34,4 +34,7 @@ abstract class BaseFragment<B : ViewBinding>(
     fun showToastMessage(message : String){
         Toast.makeText(activity,message,Toast.LENGTH_SHORT).show()
     }
+
+    open fun onBackPressed() {
+    }
 }
