@@ -29,15 +29,15 @@ class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
 
     private val stompManager: StompManager = StompManager()
     private lateinit var mStompClient: StompClient
-    val chatId = ApplicationClass.sSharedPreferences.getInt("chatId",1) // 0임시임
-    val userId = ApplicationClass.sSharedPreferences.getInt("userId",2)
+    val chatId = ApplicationClass.sSharedPreferences.getInt("chatId",1)
+    val memberId = ApplicationClass.sSharedPreferences.getInt("memberId",2)
     private val viewModel: ChatViewModel by viewModels()
 
     @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ChattingService(this@ChattingMessageFragment).tryGetChattingMessage(chatId = 1, userId = 2)
+        ChattingService(this@ChattingMessageFragment).tryGetChattingMessage(chatId = chatId, memberId = 2)
 
         // mStompClient 초기화
         mStompClient = stompManager.connectStomp(chatId)

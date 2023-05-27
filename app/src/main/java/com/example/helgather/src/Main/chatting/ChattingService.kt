@@ -10,15 +10,16 @@ import retrofit2.Response
 
 class ChattingService(val chattingFragmentInterface: ChattingFragmentInterface) {
 
-    fun tryGetChattingRoom(user_id : Int){
+    fun tryGetChattingRoom(memberId : Int){
         val chattingRetrofitInterface = ApplicationClass.sRetrofit.create(ChattingRetrofitInterface::class.java)
-        chattingRetrofitInterface.getChatRoom(id = user_id).enqueue(object : Callback<ChatRoomResponse>{
+        chattingRetrofitInterface.getChatRoom(id = memberId).enqueue(object : Callback<ChatRoomResponse>{
             override fun onResponse(
                 call: Call<ChatRoomResponse>,
                 response: Response<ChatRoomResponse>
             ) {
-                Log.d("chatting","${response.body()?.message} ${response.body()?.isSuccess} ${response.body()?.code}")
-                if (response.isSuccessful && response.body() != null) {
+                Log.d("chattingd","${response.errorBody().toString()} ")
+                Log.d("chattinge","${response.body().toString()} ")
+                if (response.isSuccessful) {
                     chattingFragmentInterface.onGetChatRoomSuccess(response.body() as ChatRoomResponse)
                 } else {
                     chattingFragmentInterface.onGetChatRoomSuccess(ChatRoomResponse(emptyList()))
@@ -31,9 +32,9 @@ class ChattingService(val chattingFragmentInterface: ChattingFragmentInterface) 
         })
     }
 
-    fun tryGetChattingMessage(chatId : Int,userId : Int){
+    fun tryGetChattingMessage(chatId : Int,memberId : Int){
         val chattingRetrofitInterface = ApplicationClass.sRetrofit.create(ChattingRetrofitInterface::class.java)
-        chattingRetrofitInterface.getChatMessage(id = chatId, userId = userId).enqueue(object  : Callback<ChatMessageResponse>{
+        chattingRetrofitInterface.getChatMessage(id = chatId, memberId = memberId).enqueue(object  : Callback<ChatMessageResponse>{
             override fun onResponse(
                 call: Call<ChatMessageResponse>,
                 response: Response<ChatMessageResponse>
