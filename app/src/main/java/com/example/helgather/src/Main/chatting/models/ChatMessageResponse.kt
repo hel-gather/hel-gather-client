@@ -4,5 +4,8 @@ import com.example.helgather.config.BaseResponse
 import com.google.gson.annotations.SerializedName
 
 data class ChatMessageResponse(
-    @SerializedName("result") val ChatMessageResult : List<ChatMessageResult>
-) : BaseResponse()
+    @SerializedName("isSuccess") val isSuccess: Boolean = false,
+    @SerializedName("code") val code: Int = 0,
+    @SerializedName("message") val message: String? = null,
+    @SerializedName("result") val chatMessageResult : MutableList<ChatMessageResult>
+)

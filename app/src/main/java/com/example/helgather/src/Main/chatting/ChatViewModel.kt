@@ -1,5 +1,6 @@
 package com.example.helgather.src.Main.chatting
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,29 +8,27 @@ import com.example.helgather.src.Main.chatting.models.ChatMessageResult
 import com.google.gson.Gson
 
 class ChatViewModel : ViewModel() {
+    private val _messageList = MutableLiveData<MutableList<ChatMessageResult>>()
+    val messageList: LiveData<MutableList<ChatMessageResult>> = _messageList
 
-    val _messageList = MutableLiveData<List<ChatMessageResult>>()
-    val messageList : LiveData<List<ChatMessageResult>> = _messageList
+    init {
+        _messageList.value = mutableListOf()
+    }
 
     fun addMessage(message: ChatMessageResult) {
-        val updatedMessages = _messageList.value?.toMutableList() ?: mutableListOf()
-        // 중복된 메시지인지 체크 후 추가
-        if (!updatedMessages.contains(message)) {
-            updatedMessages.add(0, message)
-        }
-        _messageList.postValue(updatedMessages)
+        _messageList.value?.add(message)
+        _messageList.value = _messageList.value
     }
 
+    fun addMessageList(messages: List<ChatMessageResult>) {
+        val currentMessages = _messageList.value ?: mutableListOf()
+        currentMessages.addAll(messages)
+        _messageList.value = currentMessages
+    }
 
-    // ChatViewModel 클래스에 추가
-    fun addMessageFromJson(messageJson: String) {
-        val message = Gson().fromJson(messageJson, ChatMessageResult::class.java)
+    fun addMessageFromJson(jsonString: String) {
+        val gson = Gson()
+        val message = gson.fromJson(jsonString, ChatMessageResult::class.java)
         addMessage(message)
     }
-
-    fun isMessageExists(message: ChatMessageResult): Boolean {
-        val existingMessages = messageList.value ?: emptyList()
-        return existingMessages.any { it.userId == message.userId } // 여기에서 id가 메시지의 고유 식별자라고 가정
-    }
-
 }

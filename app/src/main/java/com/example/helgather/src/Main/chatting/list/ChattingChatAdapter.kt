@@ -7,15 +7,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
+import com.example.helgather.config.ApplicationClass.Companion.sSharedPreferences
 import com.example.helgather.databinding.ChattingMineListBinding
 import com.example.helgather.databinding.ChattingOtherListBinding
 import com.example.helgather.src.Main.chatting.ChatViewModel
 import com.example.helgather.src.Main.chatting.models.ChatMessageResult
 import com.example.helgather.util.TimeConversion
 
-class ChattingChatAdapter(var messages: MutableList<ChatMessageResult>)
+class ChattingChatAdapter(var messages: MutableList<ChatMessageResult>,private val memberId: Int)
     : RecyclerView.Adapter<ChattingChatAdapter.MessageViewHolder>() {
-//
+
 //    private val messages = mutableListOf<ChatMessageResult>()
 
 
@@ -27,7 +28,7 @@ class ChattingChatAdapter(var messages: MutableList<ChatMessageResult>)
 
 
     override fun getItemViewType(position: Int): Int = when (messages[position].userId) {
-        0 -> VIEW_TYPE_MINE
+        memberId -> VIEW_TYPE_MINE
         else -> VIEW_TYPE_OTHER
     }
 
@@ -67,9 +68,21 @@ class ChattingChatAdapter(var messages: MutableList<ChatMessageResult>)
         }
     }
 
-    fun addMessage(message : ChatMessageResult){
-        messages.add(0,message)
-        notifyItemInserted(0)
+//    fun addMessage(message: ChatMessageResult) {
+//        val newList = messages.toMutableList()
+//        newList.add(0, message)
+//        messages = newList
+//        notifyItemInserted(0)
+//    }
+
+    fun addMessage(message: ChatMessageResult) {
+        messages.add(messages.size-1, message)
+        notifyItemInserted(messages.size - 1)
+    }
+
+    fun setChatMessages(newMessages: List<ChatMessageResult>) {
+        messages = newMessages.toMutableList()
+        notifyDataSetChanged()
     }
 
     fun submitList(newList: List<ChatMessageResult>) {
@@ -91,7 +104,7 @@ class ChattingChatAdapter(var messages: MutableList<ChatMessageResult>)
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
             val oldItem = oldList[oldItemPosition]
             val newItem = newList[newItemPosition]
-            return oldItem.message == newItem.message // id를 기준으로 아이템이 동일한지 비교
+            return oldItem.time == newItem.time // 시간을 기준으로 아이템이 동일한지 비교
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

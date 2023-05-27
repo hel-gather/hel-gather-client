@@ -1,6 +1,7 @@
 package com.example.helgather.src.Main.chatting
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.helgather.R
@@ -17,10 +18,14 @@ import com.example.helgather.src.Main.chatting.models.ChatRoomResult
 class ChattingFragment : BaseFragment<FragmentChattingBinding>(FragmentChattingBinding::bind, R.layout.fragment_chatting)
     ,ChattingFragmentInterface{
 
+    private val memberId = sSharedPreferences.getInt("memberId",0)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ChattingService(this@ChattingFragment).tryGetChattingRoom(1) //우선 임시적으로 1로 설정
+
+
+        ChattingService(this@ChattingFragment).tryGetChattingRoom(memberId = memberId) //우선 임시적으로 1로 설정
     }
 
     override fun onResume() {
@@ -35,7 +40,7 @@ class ChattingFragment : BaseFragment<FragmentChattingBinding>(FragmentChattingB
                 override fun onRoomClick(view: ChattingRoomsListBinding, pos: Int) {
                     view.root.setOnClickListener {
                         val sSharedPref = sSharedPreferences.edit()
-                        sSharedPref.putInt("chatId",response.ChatRoomResult[pos].chatId)
+                        sSharedPref.putInt("chatId",response.ChatRoomResult[pos].chatId) // 채팅방 아이디
                         sSharedPref.apply()
                         parentFragmentManager.beginTransaction().replace(R.id.frm_main,ChattingMessageFragment()).addToBackStack("Chatting").commit()
                     }

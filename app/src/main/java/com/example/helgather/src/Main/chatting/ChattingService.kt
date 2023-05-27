@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.helgather.config.ApplicationClass
 import com.example.helgather.src.Main.chatting.models.ChatMessageResponse
 import com.example.helgather.src.Main.chatting.models.ChatRoomResponse
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,11 +40,17 @@ class ChattingService(val chattingFragmentInterface: ChattingFragmentInterface) 
                 call: Call<ChatMessageResponse>,
                 response: Response<ChatMessageResponse>
             ) {
-                if (response.isSuccessful && response.body() != null) {
+                if (response.isSuccessful) {
+                    Log.d("testtest1",response.body().toString())
                     chattingFragmentInterface.onGetChatMessageSuccess(response.body() as ChatMessageResponse)
                 } else {
-                    Log.d("messageTest", response.errorBody().toString())
-                    chattingFragmentInterface.onGetChatMessageSuccess(ChatMessageResponse(emptyList()))
+                    Log.d("testtest2",response.errorBody().toString())
+                    val gson = Gson()
+                    val errorBodyStr = response.errorBody()?.string()
+                    val errorResponse = gson.fromJson(errorBodyStr,ChatMessageResponse::class.java)
+                    val getMessageResult = errorResponse.chatMessageResult
+                    val getMessageResponse = ChatMessageResponse(false,errorResponse.code,errorResponse.message,getMessageResult)
+                    chattingFragmentInterface.onGetChatMessageSuccess(getMessageResponse)
                 }
             }
 

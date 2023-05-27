@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -32,25 +33,33 @@ class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
     val chatId = ApplicationClass.sSharedPreferences.getInt("chatId",1)
     val memberId = ApplicationClass.sSharedPreferences.getInt("memberId",2)
     private val viewModel: ChatViewModel by viewModels()
+    private lateinit var chatAdapter: ChattingChatAdapter
 
     @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ChattingService(this@ChattingMessageFragment).tryGetChattingMessage(chatId = chatId, memberId = 2)
+        ChattingService(this@ChattingMessageFragment).tryGetChattingMessage(chatId = chatId, memberId = memberId)
 
         // mStompClient 초기화
         mStompClient = stompManager.connectStomp(chatId)
 
         // 메시지를 받을 때의 Listener를 설정
         val subscribe = mStompClient.topic("/sub/chats/$chatId").subscribe { topicMessage ->
-            // 메시지를 받았을 때의 동작을 여기에 작성합니다.
-            viewModel.addMessageFromJson(topicMessage.payload)
+            val receivedMessage = topicMessage.payload
+            // 메시지를 받았을 때의 동작을 여기에 작성
+            viewModel.addMessageFromJson(receivedMessage)
         }
         viewModel.messageList.observe(viewLifecycleOwner) { messages ->
-            val mutableMessages = messages.toMutableList() // MutableList로 변환
-            val chatAdapter = ChattingChatAdapter(mutableMessages)
-            chatAdapter.submitList(messages)
+            chatAdapter = ChattingChatAdapter(messages, memberId)
+            binding.rvChattingChat.apply {
+                adapter = chatAdapter
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+                post {
+                    scrollToPosition(messages.size - 1)
+                }
+            }
         }
 
         messageControl()
@@ -88,10 +97,11 @@ class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
             val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
             val currentTime = Date()
             val formattedTime = outputFormat.format(currentTime)
-            val chatMessage = ChatMessageResult(first = false, message, formattedTime, 1, 0)
+            Log.d("testtesttest","$message, $formattedTime, $memberId")
+            val chatMessage = ChatMessageResult(memberId,message, time = formattedTime,false,"")
             viewModel.addMessage(chatMessage)
             binding.edtChatMessage.text.clear()
-            stompManager.sendMessage(1, userId = 2 ,message,formattedTime,0,true)
+            stompManager.sendMessage(chatId, userId = memberId ,message,formattedTime,"",true)
         }
 
     }
@@ -101,17 +111,29 @@ class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
 
     override fun onGetChatRoomFailure(message: String) {}
 
+    //    override fun onGetChatMessageSuccess(response: ChatMessageResponse) {
+//        chatAdapter = ChattingChatAdapter(response.chatMessageResult.toMutableList(),memberId)
+//        binding.rvChattingChat.apply {
+//            adapter = chatAdapter
+//            layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,true)
+//        }
+//        response.chatMessageResult.forEach { message ->
+//            viewModel.addMessage(message)
+//            chatAdapter.addMessage(message)
+//        }
+//
+//        binding.rvChattingChat.scrollToPosition(0)
+//    }
     override fun onGetChatMessageSuccess(response: ChatMessageResponse) {
-        val chatAdapter = ChattingChatAdapter(response.ChatMessageResult.toMutableList())
+        viewModel.addMessageList(response.chatMessageResult)
+
         binding.rvChattingChat.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            val messages = viewModel.messageList.value
+            chatAdapter = ChattingChatAdapter(messages ?: mutableListOf(), memberId)
             adapter = chatAdapter
-            layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,true)
-        }
-        response.ChatMessageResult.forEach { message ->
-            if (!viewModel.isMessageExists(message)) {
-                viewModel.addMessage(message)
-                chatAdapter.addMessage(message)
-            }
+
+
         }
 
         binding.rvChattingChat.scrollToPosition(0)
