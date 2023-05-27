@@ -43,7 +43,7 @@ class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
         mStompClient = stompManager.connectStomp(chatId)
 
         // 메시지를 받을 때의 Listener를 설정
-        val subscribe = mStompClient.topic("/sub/chatroom/$chatId").subscribe { topicMessage ->
+        val subscribe = mStompClient.topic("/sub/chats/$chatId").subscribe { topicMessage ->
             // 메시지를 받았을 때의 동작을 여기에 작성합니다.
             viewModel.addMessageFromJson(topicMessage.payload)
         }

@@ -30,15 +30,15 @@ class StompManager {
 
         // StompClient를 생성하고 설정합니다.
         mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://13.124.19.96:8080/ws")
-        val headers = mutableMapOf<String, String>()
-        val authorization = sSharedPreferences.getString("Authorization","")
-        headers["Authorization"] = "Bearer $authorization"
-
-        val stompHeaders = headers.map { (key, value) ->
-            StompHeader(key, value)
-        }
-
-        mStompClient.connect(stompHeaders)
+//        val headers = mutableMapOf<String, String>()
+//        val authorization = sSharedPreferences.getString("Authorization","")
+///*        headers["Authorization"] = "Bearer $authorization"
+//
+//        val stompHeaders = headers.map { (key, value) ->
+//            StompHeader(key, value)
+//        }
+//
+//        mStompClient.connect(stompHeaders)*/
         return mStompClient
     }
 
@@ -70,6 +70,6 @@ class StompManager {
         mStompClient.connect(stompHeaders)
 
         // 메시지를 보냅니다.
-        mStompClient.send("/pub/chatroom/$chatId", jsonMessage).subscribe()
+        mStompClient.send("/pub/chats/$chatId", jsonMessage).subscribe()
     }
 }
