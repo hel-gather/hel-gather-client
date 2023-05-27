@@ -46,7 +46,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                         // 선택된 프래그먼트를 표시
                         show(selectedFragment!!)
                     }
-                }.commitAllowingStateLoss()
+                }.commit()
 
                 true
             }
