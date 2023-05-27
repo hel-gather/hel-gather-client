@@ -60,6 +60,7 @@ class LoginActivity:BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::inf
             }
             sharedPref.apply()
             val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            showToastMessage("로그인 성공!")
             startActivity(intent)
             finish()
         }else{
