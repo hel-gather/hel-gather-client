@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.helgather.databinding.ProfileSbdListBinding
+import com.example.helgather.src.Main.profile.model.GetSBDResult
 import com.example.helgather.src.Main.profile.model.ProfileSBDTest
 
 @Suppress("DEPRECATION")
-class ProfileSBDAdapter(var profileSBDTest: List<ProfileSBDTest>,private val clickListener : ProfileSBDClickListener<ProfileSBDTest>)
+class ProfileSBDAdapter(var getSBDResult: List<GetSBDResult>,private val clickListener : ProfileSBDClickListener<GetSBDResult>)
     : RecyclerView.Adapter<ProfileSBDAdapter.SBDViewHolder>() {
 
     interface ProfileSBDClickListener<T>{
@@ -24,7 +25,7 @@ class ProfileSBDAdapter(var profileSBDTest: List<ProfileSBDTest>,private val cli
     }
 
     override fun onBindViewHolder(holder: SBDViewHolder, position: Int) {
-        holder.bind(profileSBDTest[position])
+        holder.bind(getSBDResult[position])
 
         holder.binding.btnSbdUpload.setOnClickListener {
             clickListener.onUploadClick(holder.binding,position)
@@ -35,13 +36,13 @@ class ProfileSBDAdapter(var profileSBDTest: List<ProfileSBDTest>,private val cli
     }
 
     override fun getItemCount(): Int {
-        return profileSBDTest.size
+        return getSBDResult.size
     }
 
     inner class SBDViewHolder(val binding : ProfileSbdListBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(profileSBDTest: ProfileSBDTest){
-            binding.tvSbdTitle.text = profileSBDTest.sbdName
-            Glide.with(itemView).load(profileSBDTest.sbdPreview).into(binding.ivSbdPreview)
+        fun bind(getSBDResult: GetSBDResult){
+            binding.tvSbdTitle.text = getSBDResult.category
+            Glide.with(itemView).load(getSBDResult.thumbNailUrl).into(binding.ivSbdPreview)
         }
     }
 }

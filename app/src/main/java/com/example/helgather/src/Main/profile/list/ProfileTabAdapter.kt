@@ -2,9 +2,9 @@ package com.example.helgather.src.Main.profile.list
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.helgather.src.Main.profile.ProfileAuthFragment
-import com.example.helgather.src.Main.profile.ProfileFragment
-import com.example.helgather.src.Main.profile.ProfileSBDFragment
+import com.example.helgather.src.Main.profile.view.ProfileAuthFragment
+import com.example.helgather.src.Main.profile.view.ProfileFragment
+import com.example.helgather.src.Main.profile.view.ProfileSBDFragment
 
 class ProfileTabAdapter(fragment : ProfileFragment) : FragmentStateAdapter(fragment) {
 

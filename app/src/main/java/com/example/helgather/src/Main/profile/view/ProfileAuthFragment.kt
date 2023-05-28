@@ -1,28 +1,31 @@
-package com.example.helgather.src.Main.profile
+package com.example.helgather.src.Main.profile.view
 
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.example.helgather.R
+import com.example.helgather.config.ApplicationClass
 import com.example.helgather.config.ApplicationClass.Companion.sSharedPreferences
 import com.example.helgather.config.BaseFragment
 import com.example.helgather.databinding.FragmentProfileAuthBinding
+import com.example.helgather.src.Main.profile.ProfileFragmentInterface
+import com.example.helgather.src.Main.profile.ProfileService
 import com.example.helgather.src.Main.profile.list.ProfileAuthAdapter
 import com.example.helgather.src.Main.profile.model.GetSBDResponse
 import com.example.helgather.src.Main.profile.model.GetTodayExerciseResponse
+import com.example.helgather.src.Main.profile.model.PatchProfileImageResponse
 import com.example.helgather.src.Main.profile.model.PostTodayExerciseResponse
-import com.example.helgather.util.GridSpacingItemDecoration
 
-class ProfileAuthFragment : BaseFragment<FragmentProfileAuthBinding> (FragmentProfileAuthBinding::bind , R.layout.fragment_profile_auth),ProfileFragmentInterface{
+class ProfileAuthFragment : BaseFragment<FragmentProfileAuthBinding> (FragmentProfileAuthBinding::bind , R.layout.fragment_profile_auth),
+    ProfileFragmentInterface {
+
+    val memberId = ApplicationClass.sSharedPreferences.getInt("memberId",0)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val memberId = sSharedPreferences.getInt("memberId",0)
-
-        ProfileService(this@ProfileAuthFragment).tryGetTodayExercise(member = 1)
+        ProfileService(this@ProfileAuthFragment).tryGetTodayExercise(memberId)
 
     }
 
@@ -31,9 +34,8 @@ class ProfileAuthFragment : BaseFragment<FragmentProfileAuthBinding> (FragmentPr
         if(response.code == 200){
             binding.rvProfileAuth.apply {
                 adapter = ProfileAuthAdapter(response.getTodayExerciseResult)
-                layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-            //layoutManager = GridLayoutManager(context,3)
-                //addItemDecoration(GridSpacingItemDecoration(5,3))
+                layoutManager = GridLayoutManager(context,3)
+//                layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
             }
         }
     }
@@ -52,5 +54,11 @@ class ProfileAuthFragment : BaseFragment<FragmentProfileAuthBinding> (FragmentPr
     }
 
     override fun onGetSBDFailure(message: String) {
+    }
+
+    override fun onPatchProfileImageSuccess(response: PatchProfileImageResponse) {
+    }
+
+    override fun onPatchProfileImageFailure(message: String) {
     }
 }
