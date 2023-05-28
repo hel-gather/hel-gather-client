@@ -2,25 +2,19 @@ package com.example.helgather.src.Login
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
@@ -31,17 +25,15 @@ import com.example.helgather.src.Login.model.PostSignUpImageResponse
 import com.example.helgather.src.Login.model.PostSignUpProfileResponse
 import com.example.helgather.src.Login.model.PostSignUpResponse
 import com.example.helgather.src.Main.MainActivity
-import okhttp3.MediaType
+import com.example.helgather.util.ImageUtil.rotateImageIfRequired
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 class SignUpImageActivity : BaseActivity<ActivitySignupImageBinding>(ActivitySignupImageBinding::inflate), LoginInterface {
 
@@ -56,8 +48,7 @@ class SignUpImageActivity : BaseActivity<ActivitySignupImageBinding>(ActivitySig
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        memberId = intent.getIntExtra("memberId",0)
-        memberId = 46
+        memberId = intent.getIntExtra("memberId",0)
 
 
         requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -137,11 +128,13 @@ class SignUpImageActivity : BaseActivity<ActivitySignupImageBinding>(ActivitySig
 
     private fun getRealPathFromURI(uri: Uri): String? {
         // Load the image into a Bitmap.
-        val sourceBitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
+        var sourceBitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
+
+        sourceBitmap = rotateImageIfRequired(this, sourceBitmap, uri)
 
         // Resize the bitmap.
-        val width = (sourceBitmap.width * 0.1).toInt()
-        val height = (sourceBitmap.height * 0.1).toInt()
+        val width = (sourceBitmap.width * 0.15).toInt()
+        val height = (sourceBitmap.height * 0.15).toInt()
         val resizedBitmap = Bitmap.createScaledBitmap(sourceBitmap, width, height, true)
 
         // Save the resized bitmap into a temporary file.
