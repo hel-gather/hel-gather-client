@@ -57,6 +57,8 @@ dependencies {
 
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.15.1'
+    //glide 아마존 s3접근 + http사용 문제로 진행
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.12.0'
 
     //roomDatabase
     def room_version = "2.4.2"

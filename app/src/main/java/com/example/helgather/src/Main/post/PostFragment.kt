@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.helgather.R
 import com.example.helgather.config.BaseFragment
 import com.example.helgather.databinding.FragmentPostBinding
+import com.example.helgather.src.Main.MainActivity
 
 class PostFragment : BaseFragment<FragmentPostBinding>(FragmentPostBinding::bind , R.layout.fragment_post) {
 
@@ -35,7 +36,22 @@ class PostFragment : BaseFragment<FragmentPostBinding>(FragmentPostBinding::bind
         super.onViewCreated(view, savedInstanceState)
 
         postRecyclerView()
+
+        binding.fabPostWriting.setOnClickListener {
+            parentFragmentManager.beginTransaction().add(R.id.frm_main,PostWriteFragment()).commit()
+        }
+
+        //스와이프시 게시물 갱신
+        binding.srlPost.setOnRefreshListener {
+            //여기서 서버랑 통신
+        }
         
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val mainAct = activity as MainActivity
+        mainAct.hideBottomNavi(false)
     }
 
 
