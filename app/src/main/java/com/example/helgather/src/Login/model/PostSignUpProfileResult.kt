@@ -6,5 +6,6 @@ data class PostSignUpProfileResult(
     val exerciseCount: Int,
     val introduction: String,
     val memberId: Int,
+    val imageUrl : String,
     val squat: Int
 )
