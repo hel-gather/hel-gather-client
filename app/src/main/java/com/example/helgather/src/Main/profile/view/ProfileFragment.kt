@@ -24,12 +24,14 @@ import com.example.helgather.R
 import com.example.helgather.config.ApplicationClass
 import com.example.helgather.config.BaseFragment
 import com.example.helgather.databinding.FragmentProfileBinding
+import com.example.helgather.src.Main.MainActivity
 import com.example.helgather.src.Main.profile.ProfileFragmentInterface
 import com.example.helgather.src.Main.profile.ProfileService
 import com.example.helgather.src.Main.profile.list.ProfileTabAdapter
 import com.example.helgather.src.Main.profile.model.GetSBDResponse
 import com.example.helgather.src.Main.profile.model.GetTodayExerciseResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileImageResponse
+import com.example.helgather.src.Main.profile.model.PatchProfileIntroductionResponse
 import com.example.helgather.src.Main.profile.model.PostTodayExerciseResponse
 import com.example.helgather.util.ImageUtil
 import com.google.android.material.tabs.TabLayoutMediator
@@ -46,6 +48,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     ProfileFragmentInterface {
 
     private var memberId  = ApplicationClass.sSharedPreferences.getInt("memberId",0)
+    private var memberName  = ApplicationClass.sSharedPreferences.getString("memberName","사용자")
     private lateinit var photoURI: Uri
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<Array<String>>
     private lateinit var takePhotoLauncher: ActivityResultLauncher<Uri>
@@ -56,9 +59,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d("profiletest",memberId.toString())
+        binding.tvProfileName.text = memberName
 
-        memberId = ApplicationClass.sSharedPreferences.getInt("memberId",0)
 
         tabLayoutControl()
 
@@ -131,7 +133,29 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             }
         }
 
+        binding.btnProfileEdit.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("squat", binding.tvProfileSquat.text.toString())
+            bundle.putString("benchpress",binding.tvProfileBenchPress.text.toString())
+            bundle.putString("deadlift",binding.tvProfileDeadlift.text.toString())
+            bundle.putString("introduction",binding.tvProfileIntroduction.text.toString())
+            val profileEditFragment = ProfileEditFragment()
+            profileEditFragment.arguments = bundle
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frm_main, profileEditFragment)
+                .addToBackStack("edit")
+                .commit()
+        }
+
     }
+
+    override fun onResume() {
+        super.onResume()
+        val mainAct = activity as MainActivity
+        mainAct.hideBottomNavi(false)
+
+    }
+
     private fun tabLayoutControl(){
         binding.vpProfile.apply {
             adapter = ProfileTabAdapter(this@ProfileFragment)
@@ -209,28 +233,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
 
-    override fun onGetTodayExerciseSuccess(response: GetTodayExerciseResponse) {
-
-    }
-
-    override fun onGetTodayExerciseFailure(message: String) {
-    }
-
-    override fun onPostTodayExerciseSuccess(response: PostTodayExerciseResponse) {
-    }
-
-    override fun onPostTodayExerciseFailure(message: String) {
-    }
-
-    override fun onGetSBDSuccess(response: GetSBDResponse) {
-    }
-
-    override fun onGetSBDFailure(message: String) {
-    }
-
-    override fun onPatchProfileImageSuccess(response: PatchProfileImageResponse) {
-    }
-
-    override fun onPatchProfileImageFailure(message: String) {
-    }
+    override fun onGetTodayExerciseSuccess(response: GetTodayExerciseResponse) {}
+    override fun onGetTodayExerciseFailure(message: String) {}
+    override fun onPostTodayExerciseSuccess(response: PostTodayExerciseResponse) {}
+    override fun onPostTodayExerciseFailure(message: String) {}
+    override fun onGetSBDSuccess(response: GetSBDResponse) {}
+    override fun onGetSBDFailure(message: String) {}
+    override fun onPatchProfileImageSuccess(response: PatchProfileImageResponse) {}
+    override fun onPatchProfileImageFailure(message: String) {}
+    override fun onPatchProfileIntroductionSuccess(response: PatchProfileIntroductionResponse) {}
+    override fun onPatchProfileIntroductionFailure(message: String) {}
 }

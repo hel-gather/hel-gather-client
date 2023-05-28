@@ -16,6 +16,7 @@ import com.example.helgather.src.Main.profile.list.ProfileAuthAdapter
 import com.example.helgather.src.Main.profile.model.GetSBDResponse
 import com.example.helgather.src.Main.profile.model.GetTodayExerciseResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileImageResponse
+import com.example.helgather.src.Main.profile.model.PatchProfileIntroductionResponse
 import com.example.helgather.src.Main.profile.model.PostTodayExerciseResponse
 
 class ProfileAuthFragment : BaseFragment<FragmentProfileAuthBinding> (FragmentProfileAuthBinding::bind , R.layout.fragment_profile_auth),
@@ -35,7 +36,6 @@ class ProfileAuthFragment : BaseFragment<FragmentProfileAuthBinding> (FragmentPr
             binding.rvProfileAuth.apply {
                 adapter = ProfileAuthAdapter(response.getTodayExerciseResult)
                 layoutManager = GridLayoutManager(context,3)
-//                layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
             }
         }
     }
@@ -60,5 +60,11 @@ class ProfileAuthFragment : BaseFragment<FragmentProfileAuthBinding> (FragmentPr
     }
 
     override fun onPatchProfileImageFailure(message: String) {
+    }
+
+    override fun onPatchProfileIntroductionSuccess(response: PatchProfileIntroductionResponse) {
+    }
+
+    override fun onPatchProfileIntroductionFailure(message: String) {
     }
 }

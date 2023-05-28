@@ -4,6 +4,9 @@ import com.example.helgather.config.ApplicationClass
 import com.example.helgather.src.Main.profile.model.GetSBDResponse
 import com.example.helgather.src.Main.profile.model.GetTodayExerciseResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileImageResponse
+import com.example.helgather.src.Main.profile.model.PatchProfileIntroductionRequest
+import com.example.helgather.src.Main.profile.model.PatchProfileIntroductionResponse
+import com.example.helgather.src.Main.profile.model.PatchProfileIntroductionResult
 import com.example.helgather.src.Main.profile.model.PostTodayExerciseResponse
 import com.example.helgather.src.Main.profile.model.PostTodayExerciseResult
 import com.google.gson.Gson
@@ -117,6 +120,32 @@ class ProfileService(val profileFragmentInterface : ProfileFragmentInterface) {
             }
         })
 
+    }
+
+    fun tryPatchIntroduction(memberId: Int, patchProfileIntroductionRequest : PatchProfileIntroductionRequest){
+        val profileRetrofitInterface = ApplicationClass.sRetrofit.create(ProfileRetrofitInterface::class.java)
+        profileRetrofitInterface.patchProfileIntroduction(memberId =  memberId, patchProfileIntroductionRequest)
+            .enqueue(object  : Callback<PatchProfileIntroductionResponse>{
+            override fun onResponse(
+                call: Call<PatchProfileIntroductionResponse>,
+                response: Response<PatchProfileIntroductionResponse>
+            ) {
+                if(response.isSuccessful){
+                    profileFragmentInterface.onPatchProfileIntroductionSuccess(response.body() as PatchProfileIntroductionResponse)
+                }else{
+                    val gson = Gson()
+                    val errorBodyStr = response.errorBody()?.string()
+                    val errorResponse = gson.fromJson(errorBodyStr,PatchProfileIntroductionResponse::class.java)
+                    val patchProfileIntroductionResult = errorResponse.patchProfileIntroductionResult
+                    val patchProfileIntroductionResponse = PatchProfileIntroductionResponse(false,errorResponse.code,errorResponse.message,patchProfileIntroductionResult)
+                    profileFragmentInterface.onPatchProfileIntroductionSuccess(patchProfileIntroductionResponse)
+                }
+            }
+
+            override fun onFailure(call: Call<PatchProfileIntroductionResponse>, t: Throwable) {
+                profileFragmentInterface.onPatchProfileIntroductionFailure(t.message ?: "통신 오류")
+            }
+        })
     }
 
 

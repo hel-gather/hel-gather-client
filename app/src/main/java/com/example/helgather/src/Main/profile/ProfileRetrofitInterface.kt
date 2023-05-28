@@ -3,6 +3,9 @@ package com.example.helgather.src.Main.profile
 import com.example.helgather.src.Main.profile.model.GetSBDResponse
 import com.example.helgather.src.Main.profile.model.GetTodayExerciseResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileImageResponse
+import com.example.helgather.src.Main.profile.model.PatchProfileIntroductionRequest
+import com.example.helgather.src.Main.profile.model.PatchProfileIntroductionResponse
+import com.example.helgather.src.Main.profile.model.PatchProfileIntroductionResult
 import com.example.helgather.src.Main.profile.model.PostTodayExerciseResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -34,5 +37,9 @@ interface ProfileRetrofitInterface {
     fun patchProfileImage(@Path("memberId") memberId : Int,
                           @Part file : MultipartBody.Part): Call<PatchProfileImageResponse>
 
+
+    @PATCH("/members/profile/{memberId}")
+    fun patchProfileIntroduction(@Path("memberId")memberId : Int,
+                                @Body params : PatchProfileIntroductionRequest) : Call<PatchProfileIntroductionResponse>
 
 }

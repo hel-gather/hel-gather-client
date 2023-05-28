@@ -3,6 +3,7 @@ package com.example.helgather.src.Main.profile
 import com.example.helgather.src.Main.profile.model.GetSBDResponse
 import com.example.helgather.src.Main.profile.model.GetTodayExerciseResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileImageResponse
+import com.example.helgather.src.Main.profile.model.PatchProfileIntroductionResponse
 import com.example.helgather.src.Main.profile.model.PostTodayExerciseResponse
 
 interface ProfileFragmentInterface {
@@ -18,5 +19,8 @@ interface ProfileFragmentInterface {
 
     fun onPatchProfileImageSuccess(response : PatchProfileImageResponse)
     fun onPatchProfileImageFailure(message: String)
+
+    fun onPatchProfileIntroductionSuccess(response : PatchProfileIntroductionResponse)
+    fun onPatchProfileIntroductionFailure(message: String)
 
 }
