@@ -10,6 +10,7 @@ import com.example.helgather.databinding.FragmentProfileEditBinding
 import com.example.helgather.src.Main.MainActivity
 import com.example.helgather.src.Main.profile.ProfileFragmentInterface
 import com.example.helgather.src.Main.profile.ProfileService
+import com.example.helgather.src.Main.profile.model.GetProfileResponse
 import com.example.helgather.src.Main.profile.model.GetSBDResponse
 import com.example.helgather.src.Main.profile.model.GetTodayExerciseResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileImageResponse
@@ -90,5 +91,9 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>(FragmentPro
     override fun onGetSBDFailure(message: String) {}
     override fun onPatchProfileImageSuccess(response: PatchProfileImageResponse) {}
     override fun onPatchProfileImageFailure(message: String) {}
+    override fun onGetProfileSuccess(response: GetProfileResponse) {
+    }
 
+    override fun onGetProfileFailure(message: String) {
+    }
 }

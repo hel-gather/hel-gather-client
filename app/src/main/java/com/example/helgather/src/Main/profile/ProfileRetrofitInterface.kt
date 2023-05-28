@@ -1,5 +1,6 @@
 package com.example.helgather.src.Main.profile
 
+import com.example.helgather.src.Main.profile.model.GetProfileResponse
 import com.example.helgather.src.Main.profile.model.GetSBDResponse
 import com.example.helgather.src.Main.profile.model.GetTodayExerciseResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileImageResponse
@@ -41,5 +42,9 @@ interface ProfileRetrofitInterface {
     @PATCH("/members/profile/{memberId}")
     fun patchProfileIntroduction(@Path("memberId")memberId : Int,
                                 @Body params : PatchProfileIntroductionRequest) : Call<PatchProfileIntroductionResponse>
+
+
+    @GET("/members/profile/{memberId}")
+    fun getProfile(@Path("memberId")memberId : Int) : Call<GetProfileResponse>
 
 }

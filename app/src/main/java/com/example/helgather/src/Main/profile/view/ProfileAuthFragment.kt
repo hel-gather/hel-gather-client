@@ -13,6 +13,7 @@ import com.example.helgather.databinding.FragmentProfileAuthBinding
 import com.example.helgather.src.Main.profile.ProfileFragmentInterface
 import com.example.helgather.src.Main.profile.ProfileService
 import com.example.helgather.src.Main.profile.list.ProfileAuthAdapter
+import com.example.helgather.src.Main.profile.model.GetProfileResponse
 import com.example.helgather.src.Main.profile.model.GetSBDResponse
 import com.example.helgather.src.Main.profile.model.GetTodayExerciseResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileImageResponse
@@ -67,4 +68,8 @@ class ProfileAuthFragment : BaseFragment<FragmentProfileAuthBinding> (FragmentPr
 
     override fun onPatchProfileIntroductionFailure(message: String) {
     }
+
+    override fun onGetProfileSuccess(response: GetProfileResponse) {}
+
+    override fun onGetProfileFailure(message: String) {}
 }

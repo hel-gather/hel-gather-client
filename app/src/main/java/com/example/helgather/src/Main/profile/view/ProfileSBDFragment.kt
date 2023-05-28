@@ -12,6 +12,7 @@ import com.example.helgather.databinding.ProfileSbdListBinding
 import com.example.helgather.src.Main.profile.ProfileFragmentInterface
 import com.example.helgather.src.Main.profile.ProfileService
 import com.example.helgather.src.Main.profile.list.ProfileSBDAdapter
+import com.example.helgather.src.Main.profile.model.GetProfileResponse
 import com.example.helgather.src.Main.profile.model.GetSBDResponse
 import com.example.helgather.src.Main.profile.model.GetSBDResult
 import com.example.helgather.src.Main.profile.model.GetTodayExerciseResponse
@@ -60,6 +61,9 @@ class ProfileSBDFragment : BaseFragment<FragmentProfileSbdBinding> (FragmentProf
     override fun onPatchProfileImageSuccess(response: PatchProfileImageResponse) {}
     override fun onPatchProfileImageFailure(message: String) {}
     override fun onPatchProfileIntroductionSuccess(response: PatchProfileIntroductionResponse) {}
-
     override fun onPatchProfileIntroductionFailure(message: String) {}
+
+    override fun onGetProfileSuccess(response: GetProfileResponse) {}
+
+    override fun onGetProfileFailure(message: String) {}
 }

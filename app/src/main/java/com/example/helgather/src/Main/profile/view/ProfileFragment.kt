@@ -28,6 +28,7 @@ import com.example.helgather.src.Main.MainActivity
 import com.example.helgather.src.Main.profile.ProfileFragmentInterface
 import com.example.helgather.src.Main.profile.ProfileService
 import com.example.helgather.src.Main.profile.list.ProfileTabAdapter
+import com.example.helgather.src.Main.profile.model.GetProfileResponse
 import com.example.helgather.src.Main.profile.model.GetSBDResponse
 import com.example.helgather.src.Main.profile.model.GetTodayExerciseResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileImageResponse
@@ -60,6 +61,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         super.onViewCreated(view, savedInstanceState)
 
         binding.tvProfileName.text = memberName
+
+        ProfileService(this@ProfileFragment).tryGetProfile(memberId)
 
 
         tabLayoutControl()
@@ -232,6 +235,24 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
     }
 
+    override fun onGetProfileSuccess(response: GetProfileResponse) {
+        if(response.code == 200){
+            Glide.with(requireContext()).load(response.getProfileResult.imageUrl).into(binding.civProfileImage)
+            with(binding){
+                tvProfileSquat.text = response.getProfileResult.squat.toString()
+                tvProfileBenchPress.text = response.getProfileResult.benchPress.toString()
+                tvProfileDeadlift.text = response.getProfileResult.deadlift.toString()
+                tvProfileAuthCnt.text = response.getProfileResult.exerciseCount.toString()
+                tvProfileIntroduction.text = response.getProfileResult.introduction
+            }
+        }else{
+            showToastMessage("오류 : ${response.message}")
+        }
+    }
+
+    override fun onGetProfileFailure(message: String) {
+        showToastMessage("오류 : $message")
+    }
 
     override fun onGetTodayExerciseSuccess(response: GetTodayExerciseResponse) {}
     override fun onGetTodayExerciseFailure(message: String) {}

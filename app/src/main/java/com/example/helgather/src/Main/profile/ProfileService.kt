@@ -1,6 +1,8 @@
 package com.example.helgather.src.Main.profile
 
 import com.example.helgather.config.ApplicationClass
+import com.example.helgather.src.Login.model.PostSignUpProfileRequest
+import com.example.helgather.src.Main.profile.model.GetProfileResponse
 import com.example.helgather.src.Main.profile.model.GetSBDResponse
 import com.example.helgather.src.Main.profile.model.GetTodayExerciseResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileImageResponse
@@ -147,6 +149,37 @@ class ProfileService(val profileFragmentInterface : ProfileFragmentInterface) {
             }
         })
     }
+
+    fun tryGetProfile(memberId: Int) {
+        val profileRetrofitInterface = ApplicationClass.sRetrofit.create(ProfileRetrofitInterface::class.java)
+        profileRetrofitInterface.getProfile(memberId).enqueue(object : Callback<GetProfileResponse> {
+            override fun onResponse(
+                call: Call<GetProfileResponse>,
+                response: Response<GetProfileResponse>
+            ) {
+                if (response.isSuccessful) {
+                    profileFragmentInterface.onGetProfileSuccess(response.body() as GetProfileResponse)
+                } else {
+                    val gson = Gson()
+                    val errorBodyStr = response.errorBody()?.string()
+                    val errorResponse = gson.fromJson(errorBodyStr, GetProfileResponse::class.java)
+                    val getProfileResult = errorResponse.getProfileResult
+                    val getProfileResponse = GetProfileResponse(
+                        false,
+                        errorResponse.code,
+                        errorResponse.message,
+                        getProfileResult
+                    )
+                    profileFragmentInterface.onGetProfileSuccess(getProfileResponse)
+                }
+            }
+
+            override fun onFailure(call: Call<GetProfileResponse>, t: Throwable) {
+                profileFragmentInterface.onGetProfileFailure(t.message ?: "통신 오류")
+            }
+        })
+    }
+
 
 
 }
