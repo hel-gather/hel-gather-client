@@ -12,6 +12,7 @@ import com.example.helgather.src.First.StartActivity
 import com.example.helgather.src.Login.model.PostLoginRequest
 import com.example.helgather.src.Login.model.PostLoginResponse
 import com.example.helgather.src.Login.model.PostLoginResult
+import com.example.helgather.src.Login.model.PostSignUpImageResponse
 import com.example.helgather.src.Login.model.PostSignUpProfileResponse
 import com.example.helgather.src.Login.model.PostSignUpResponse
 import com.example.helgather.src.Main.MainActivity
@@ -81,4 +82,8 @@ class LoginActivity:BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::inf
 
     override fun onPostSignuUpProfileSuccess(response: PostSignUpProfileResponse) {}
     override fun onPostSignUpProfileFailure(message: String) {}
+
+    override fun onPostSignUpImageSuccess(response: PostSignUpImageResponse) {}
+
+    override fun onPostSignUpImageFailure(message: String) {}
 }

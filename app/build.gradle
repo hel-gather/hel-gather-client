@@ -95,8 +95,8 @@ dependencies {
     //circleview
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    //채팅방 위해 stomp발행
-    implementation 'org.java-websocket:Java-WebSocket:1.5.1'
+//    //채팅방 위해 stomp발행
+//    implementation 'org.java-websocket:Java-WebSocket:1.5.1'
 
     //exoplayer
     implementation 'com.google.android.exoplayer:exoplayer:2.18.7'

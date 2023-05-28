@@ -12,6 +12,7 @@ import com.example.helgather.config.ApplicationClass.Companion.sSharedPreference
 import com.example.helgather.config.BaseActivity
 import com.example.helgather.databinding.ActivitySignupBinding
 import com.example.helgather.src.Login.model.PostLoginResponse
+import com.example.helgather.src.Login.model.PostSignUpImageResponse
 import com.example.helgather.src.Login.model.PostSignUpProfileResponse
 import com.example.helgather.src.Login.model.PostSignUpRequest
 import com.example.helgather.src.Login.model.PostSignUpResponse
@@ -194,4 +195,8 @@ class SignUpActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
     override fun onPostLoginFailure(message: String) {}
     override fun onPostSignuUpProfileSuccess(response: PostSignUpProfileResponse) {}
     override fun onPostSignUpProfileFailure(message: String) {}
+
+    override fun onPostSignUpImageSuccess(response: PostSignUpImageResponse) {}
+
+    override fun onPostSignUpImageFailure(message: String) {}
 }

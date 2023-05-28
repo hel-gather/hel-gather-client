@@ -146,7 +146,7 @@
         android:maxLines="3"
         android:textColor="@color/black"
         android:textColorHint="@android:color/darker_gray"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_signUp_profile_introduction" />
@@ -158,14 +158,13 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/rectangle_round_border_appbrighter"
+        android:background="@drawable/rectangle_stroke_appbrightercolor"
         android:fontFamily="@font/tmonblack"
         android:text="건너뛰기"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_signUp_profile_complete"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -175,15 +174,14 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/rectangle_round_border_appbrighter"
+        android:background="@drawable/rectangle_border_appbrightercolor_round"
         android:fontFamily="@font/tmonblack"
         android:text="입력 완료"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_signUp_profile_skip"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_signUp_profile_skip" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/edt_signUp_profile_squat"

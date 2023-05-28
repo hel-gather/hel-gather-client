@@ -1,14 +1,17 @@
 package com.example.helgather.src.Login
 
+import android.net.Uri
 import android.util.Log
 import com.example.helgather.config.ApplicationClass
 import com.example.helgather.src.Login.model.PostLoginRequest
 import com.example.helgather.src.Login.model.PostLoginResponse
+import com.example.helgather.src.Login.model.PostSignUpImageResponse
 import com.example.helgather.src.Login.model.PostSignUpProfileRequest
 import com.example.helgather.src.Login.model.PostSignUpProfileResponse
 import com.example.helgather.src.Login.model.PostSignUpRequest
 import com.example.helgather.src.Login.model.PostSignUpResponse
 import com.google.gson.Gson
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -94,4 +97,31 @@ class LoginService(val loginInterface: LoginInterface) {
             }
         })
     }
+
+    fun tryPostSignUpImage(memberId : Int, image: MultipartBody.Part) {
+
+        val retrofitInterface = ApplicationClass.sRetrofit.create(LoginRetrofitInterface::class.java)
+        retrofitInterface.postSignUpImage(memberId, image).enqueue(object : Callback<PostSignUpImageResponse>{
+            override fun onResponse(
+                call: Call<PostSignUpImageResponse>,
+                response: Response<PostSignUpImageResponse>
+            ) {
+                if(response.isSuccessful){
+                    loginInterface.onPostSignUpImageSuccess(response.body() as PostSignUpImageResponse)
+                } else {
+                    val gson = Gson()
+                    val errorBodyStr = response.errorBody()?.string()
+                    val errorResponse = gson.fromJson(errorBodyStr, PostSignUpImageResponse::class.java)
+                    val postSignUpImageResult = errorResponse.postSignUpImageResult
+                    val postSignUpImageResponse = PostSignUpImageResponse(false, errorResponse.code, errorResponse.message, postSignUpImageResult)
+                    loginInterface.onPostSignUpImageSuccess(postSignUpImageResponse)
+                }
+            }
+
+            override fun onFailure(call: Call<PostSignUpImageResponse>, t: Throwable) {
+                loginInterface.onPostSignUpImageFailure(t.message ?: "통신 오류")
+            }
+        })
+    }
+
 }
