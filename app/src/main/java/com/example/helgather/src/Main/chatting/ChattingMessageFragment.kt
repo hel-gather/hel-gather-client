@@ -24,7 +24,7 @@ import ua.naiksoftware.stomp.StompClient
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
+    class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
     (FragmentChattingChatBinding::bind, R.layout.fragment_chatting_chat), ChattingFragmentInterface {
 
 
@@ -32,6 +32,7 @@ class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
     private lateinit var mStompClient: StompClient
     val chatId = ApplicationClass.sSharedPreferences.getInt("chatId",1)
     val memberId = ApplicationClass.sSharedPreferences.getInt("memberId",2)
+    val chatName = ApplicationClass.sSharedPreferences.getString("chatName","채팅방")
     private val viewModel: ChatViewModel by viewModels()
     private lateinit var chatAdapter: ChattingChatAdapter
 
@@ -39,17 +40,15 @@ class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.tvChattingChatId.text = chatName
+
         ChattingService(this@ChattingMessageFragment).tryGetChattingMessage(chatId = chatId, memberId = memberId)
 
         // mStompClient 초기화
         mStompClient = stompManager.connectStomp(chatId)
 
-        // 메시지를 받을 때의 Listener를 설정
-        val subscribe = mStompClient.topic("/sub/chats/$chatId").subscribe { topicMessage ->
-            val receivedMessage = topicMessage.payload
-            // 메시지를 받았을 때의 동작을 여기에 작성
-            viewModel.addMessageFromJson(receivedMessage)
-        }
+
+
         viewModel.messageList.observe(viewLifecycleOwner) { messages ->
             chatAdapter = ChattingChatAdapter(messages, memberId)
             binding.rvChattingChat.apply {
@@ -62,9 +61,17 @@ class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
             }
         }
 
+        val topic = "/sub/chats/$chatId"
+        // 메시지를 받을 때의 Listener를 설정
+        val subscribe = mStompClient.topic(topic).subscribe { topicMessage ->
+            Log.d("webSocketID",chatId.toString())
+            val receivedMessage = topicMessage.payload
+            // 메시지를 받았을 때의 동작을 여기에 작성
+            viewModel.addMessageFromJson(receivedMessage)
+        }
+
         messageControl()
     }
-
     override fun onResume() {
         super.onResume()
         //바텀네비게이션 바 숨김
@@ -76,7 +83,9 @@ class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
         super.onDestroyView()
         stompManager.disconnectStomp()
     }
-
+    override fun onBackPressed() {
+        parentFragmentManager.popBackStack()
+    }
     @SuppressLint("SimpleDateFormat")
     private fun messageControl(){
         binding.edtChatMessage.addTextChangedListener(object : TextWatcher{
@@ -98,10 +107,10 @@ class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
             val currentTime = Date()
             val formattedTime = outputFormat.format(currentTime)
             Log.d("testtesttest","$message, $formattedTime, $memberId")
-            val chatMessage = ChatMessageResult(memberId,message, time = formattedTime,false,"")
+            val chatMessage = ChatMessageResult(memberId,message, time = formattedTime,"",false)
             viewModel.addMessage(chatMessage)
             binding.edtChatMessage.text.clear()
-            stompManager.sendMessage(chatId, userId = memberId ,message,formattedTime,"",true)
+            stompManager.sendMessage(chatId, chatMessage)
         }
 
     }
@@ -110,20 +119,6 @@ class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
     override fun onGetChatRoomSuccess(response: ChatRoomResponse) {}
 
     override fun onGetChatRoomFailure(message: String) {}
-
-    //    override fun onGetChatMessageSuccess(response: ChatMessageResponse) {
-//        chatAdapter = ChattingChatAdapter(response.chatMessageResult.toMutableList(),memberId)
-//        binding.rvChattingChat.apply {
-//            adapter = chatAdapter
-//            layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,true)
-//        }
-//        response.chatMessageResult.forEach { message ->
-//            viewModel.addMessage(message)
-//            chatAdapter.addMessage(message)
-//        }
-//
-//        binding.rvChattingChat.scrollToPosition(0)
-//    }
     override fun onGetChatMessageSuccess(response: ChatMessageResponse) {
         viewModel.addMessageList(response.chatMessageResult)
 
@@ -132,8 +127,6 @@ class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
             val messages = viewModel.messageList.value
             chatAdapter = ChattingChatAdapter(messages ?: mutableListOf(), memberId)
             adapter = chatAdapter
-
-
         }
 
         binding.rvChattingChat.scrollToPosition(0)

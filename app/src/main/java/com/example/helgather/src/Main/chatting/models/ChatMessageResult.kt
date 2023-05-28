@@ -4,6 +4,6 @@ data class ChatMessageResult(
     val userId: Int,
     val message: String,
     val time: String,
-    val first: Boolean,
-    val userProfile: String
+    val userProfile: String,
+    val first: Boolean
 )

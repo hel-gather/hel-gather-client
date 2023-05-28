@@ -1,7 +1,6 @@
 package com.example.helgather.src.Main.chatting
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.helgather.R
@@ -23,8 +22,6 @@ class ChattingFragment : BaseFragment<FragmentChattingBinding>(FragmentChattingB
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         ChattingService(this@ChattingFragment).tryGetChattingRoom(memberId = memberId) //우선 임시적으로 1로 설정
     }
 
@@ -41,6 +38,7 @@ class ChattingFragment : BaseFragment<FragmentChattingBinding>(FragmentChattingB
                     view.root.setOnClickListener {
                         val sSharedPref = sSharedPreferences.edit()
                         sSharedPref.putInt("chatId",response.ChatRoomResult[pos].chatId) // 채팅방 아이디
+                        sSharedPref.putString("chatName",response.ChatRoomResult[pos].id)
                         sSharedPref.apply()
                         parentFragmentManager.beginTransaction().replace(R.id.frm_main,ChattingMessageFragment()).addToBackStack("Chatting").commit()
                     }

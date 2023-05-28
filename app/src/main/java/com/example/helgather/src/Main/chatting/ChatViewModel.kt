@@ -29,6 +29,7 @@ class ChatViewModel : ViewModel() {
     fun addMessageFromJson(jsonString: String) {
         val gson = Gson()
         val message = gson.fromJson(jsonString, ChatMessageResult::class.java)
+        Log.d("websocketmessage",message.toString())
         addMessage(message)
     }
 }

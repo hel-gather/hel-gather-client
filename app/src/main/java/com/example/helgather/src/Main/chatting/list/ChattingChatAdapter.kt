@@ -1,5 +1,6 @@
 package com.example.helgather.src.Main.chatting.list
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
+import com.example.helgather.R
 import com.example.helgather.config.ApplicationClass.Companion.sSharedPreferences
 import com.example.helgather.databinding.ChattingMineListBinding
 import com.example.helgather.databinding.ChattingOtherListBinding
@@ -16,8 +18,6 @@ import com.example.helgather.util.TimeConversion
 
 class ChattingChatAdapter(var messages: MutableList<ChatMessageResult>,private val memberId: Int)
     : RecyclerView.Adapter<ChattingChatAdapter.MessageViewHolder>() {
-
-//    private val messages = mutableListOf<ChatMessageResult>()
 
 
     companion object {
@@ -57,39 +57,29 @@ class ChattingChatAdapter(var messages: MutableList<ChatMessageResult>,private v
                 is ChattingOtherListBinding -> {
                     binding.tvChattingOtherMessage.text = chatMessage.message
                     binding.tvChattingOtherWhen.text = TimeConversion.datetoTime(chatMessage.time)
-                    if(chatMessage.first){
-                        Glide.with(itemView).load(chatMessage.userProfile)
-                            .circleCrop().into(binding.ivChattingOtherProfile)
-                    }else{
-                        binding.ivChattingOtherProfile.visibility = View.GONE
-                    }
+                    Glide.with(itemView).load(chatMessage.userProfile)
+                        .placeholder(R.drawable.ic_btm_profile) // 로드되기 전에 표시할 이미지
+                        .error(R.drawable.ic_btm_profile)
+                        .into(binding.ivChattingOtherProfile)
+//                    if (chatMessage.first) {
+//                        Log.d("testtestcat","----")
+//                        Glide.with(itemView).load(chatMessage.userProfile)
+//                            .placeholder(R.drawable.ic_btm_profile) // 로드되기 전에 표시할 이미지
+//                            .error(R.drawable.ic_btm_profile)
+//                            .into(binding.ivChattingOtherProfile)
+//                    } else {
+//                        binding.ivChattingOtherProfile.visibility = View.GONE
+//                    }
                 }
             }
         }
     }
-
-//    fun addMessage(message: ChatMessageResult) {
-//        val newList = messages.toMutableList()
-//        newList.add(0, message)
-//        messages = newList
-//        notifyItemInserted(0)
-//    }
 
     fun addMessage(message: ChatMessageResult) {
         messages.add(messages.size-1, message)
         notifyItemInserted(messages.size - 1)
     }
 
-    fun setChatMessages(newMessages: List<ChatMessageResult>) {
-        messages = newMessages.toMutableList()
-        notifyDataSetChanged()
-    }
-
-    fun submitList(newList: List<ChatMessageResult>) {
-        val diffResult = DiffUtil.calculateDiff(DiffCallback(messages, newList))
-        diffResult.dispatchUpdatesTo(this)
-        messages = newList.toMutableList() // 기존 리스트 업데이트
-    }
 
     class DiffCallback(private val oldList: List<ChatMessageResult>, private val newList: List<ChatMessageResult>) : DiffUtil.Callback() {
 
