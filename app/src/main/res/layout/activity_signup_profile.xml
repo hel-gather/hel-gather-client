@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/view8"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/app_brighter_color"
+        app:layout_constraintBottom_toTopOf="@+id/divider11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_signUp_profile_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/tmonblacknormal"
+        android:text="개인 정보 입력"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/divider11"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintTop_toBottomOf="@+id/tv_signUp_profile_title"
+        tools:layout_editor_absoluteX="1dp" />
+
+    <TextView
+        android:id="@+id/tv_signUp_profile_subTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/tmonblacknormal"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="nickname님의 간단한 소개 입력"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider11" />
+
+    <TextView
+        android:id="@+id/tv_signUp_profile_sbd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/tmonblacknormal"
+        android:text="3대 중량"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_signUp_profile_subTitle" />
+
+    <TextView
+        android:id="@+id/tv_signUp_profile_squat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:text="Squat"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_signUp_profile_sbd" />
+
+    <TextView
+        android:id="@+id/tv_signUp_profile_benchpress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:text="BenchPress"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_signUp_profile_squat" />
+
+    <TextView
+        android:id="@+id/tv_signUp_profile_deadlift"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:text="Deadlift"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_signUp_profile_benchpress" />
+
+    <View
+        android:id="@+id/divider12"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_signUp_profile_deadlift" />
+
+    <TextView
+        android:id="@+id/tv_signUp_profile_introduction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/tmonblacknormal"
+        android:text="자기소개"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider12" />
+
+    <EditText
+        android:id="@+id/edt_signUp_profile_introduction"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/rectangle_border_gray"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="ex)저는 헬스 몇년차이고 운동할 파트너를 찾습니다. \n3대운동을 좋아하고 헬스를 주 6일씩 나갑니다."
+        android:inputType="text"
+        android:lines="3"
+        android:maxLines="3"
+        android:textColor="@color/black"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_signUp_profile_introduction" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_signUp_profile_skip"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/rectangle_round_border_appbrighter"
+        android:fontFamily="@font/tmonblack"
+        android:text="건너뛰기"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_signUp_profile_complete"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_signUp_profile_complete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/rectangle_round_border_appbrighter"
+        android:fontFamily="@font/tmonblack"
+        android:text="입력 완료"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_signUp_profile_skip" />
+
+    <EditText
+        android:id="@+id/edt_signUp_profile_squat"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:background="@drawable/rectangle_border_gray"
+        android:ems="10"
+        android:hint="00"
+        android:inputType="number|numberDecimal"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_signUp_profile_squat"
+        app:layout_constraintTop_toTopOf="@+id/tv_signUp_profile_squat" />
+
+    <EditText
+        android:id="@+id/edt_signUp_profile_benchpress"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_border_gray"
+        android:ems="10"
+        android:hint="00"
+        android:inputType="number|numberDecimal"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/edt_signUp_profile_squat"
+        app:layout_constraintTop_toTopOf="@+id/tv_signUp_profile_benchpress" />
+
+    <EditText
+        android:id="@+id/edt_signUp_profile_deadlift"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_border_gray"
+        android:ems="10"
+        android:hint="00"
+        android:inputType="number|numberDecimal"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/edt_signUp_profile_benchpress"
+        app:layout_constraintTop_toTopOf="@+id/tv_signUp_profile_deadlift" />
+
+    <TextView
+        android:id="@+id/tv_signUp_profile_kg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:text="KG"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/edt_signUp_profile_squat"
+        app:layout_constraintTop_toTopOf="@+id/edt_signUp_profile_squat" />
+
+    <TextView
+        android:id="@+id/tv_signUp_profile_kg2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:text="KG"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/edt_signUp_profile_benchpress"
+        app:layout_constraintTop_toTopOf="@+id/edt_signUp_profile_benchpress" />
+
+    <TextView
+        android:id="@+id/tv_signUp_profile_kg3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:text="KG"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/edt_signUp_profile_deadlift"
+        app:layout_constraintTop_toTopOf="@+id/edt_signUp_profile_deadlift" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

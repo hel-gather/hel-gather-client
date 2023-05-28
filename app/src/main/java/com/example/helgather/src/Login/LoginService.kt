@@ -4,6 +4,8 @@ import android.util.Log
 import com.example.helgather.config.ApplicationClass
 import com.example.helgather.src.Login.model.PostLoginRequest
 import com.example.helgather.src.Login.model.PostLoginResponse
+import com.example.helgather.src.Login.model.PostSignUpProfileRequest
+import com.example.helgather.src.Login.model.PostSignUpProfileResponse
 import com.example.helgather.src.Login.model.PostSignUpRequest
 import com.example.helgather.src.Login.model.PostSignUpResponse
 import com.google.gson.Gson
@@ -65,5 +67,31 @@ class LoginService(val loginInterface: LoginInterface) {
             }
         })
 
+    }
+
+
+    fun tryPostSignUpProfile(memberId : Int,postSignUpProfileRequest: PostSignUpProfileRequest){
+        val loginRetrofitInterface = ApplicationClass.sRetrofit.create(LoginRetrofitInterface::class.java)
+        loginRetrofitInterface.postSignUpProfile(memberId,postSignUpProfileRequest).enqueue(object : Callback<PostSignUpProfileResponse>{
+            override fun onResponse(
+                call: Call<PostSignUpProfileResponse>,
+                response: Response<PostSignUpProfileResponse>
+            ) {
+                if(response.isSuccessful){
+                    loginInterface.onPostSignuUpProfileSuccess(response.body() as PostSignUpProfileResponse)
+                }else{
+                    val gson = Gson()
+                    val errorBodyStr = response.errorBody()?.string()
+                    val errorResponse = gson.fromJson(errorBodyStr, PostSignUpProfileResponse::class.java)
+                    val postSignUpProfileResult = errorResponse.postSignUpProfileResult
+                    val postSignUpProfileResponse = PostSignUpProfileResponse(false,errorResponse.code,errorResponse.message,postSignUpProfileResult)
+                    loginInterface.onPostSignuUpProfileSuccess(postSignUpProfileResponse)
+                }
+            }
+
+            override fun onFailure(call: Call<PostSignUpProfileResponse>, t: Throwable) {
+                loginInterface.onPostSignUpProfileFailure(t.message ?: "통신 오류")
+            }
+        })
     }
 }

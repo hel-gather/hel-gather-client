@@ -1,6 +1,5 @@
 package com.example.helgather.src.Login
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Build
@@ -9,15 +8,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import androidx.annotation.RequiresApi
-import com.example.helgather.config.ApplicationClass
 import com.example.helgather.config.ApplicationClass.Companion.sSharedPreferences
 import com.example.helgather.config.BaseActivity
-import com.example.helgather.config.BaseResponse
 import com.example.helgather.databinding.ActivitySignupBinding
 import com.example.helgather.src.Login.model.PostLoginResponse
+import com.example.helgather.src.Login.model.PostSignUpProfileResponse
 import com.example.helgather.src.Login.model.PostSignUpRequest
 import com.example.helgather.src.Login.model.PostSignUpResponse
-import com.example.helgather.src.Main.MainActivity
 import com.example.helgather.util.ErrorDialog
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -178,6 +175,10 @@ class SignUpActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
     override fun onPostSignUpSuccess(response: PostSignUpResponse) {
         if(response.code == 200){
             showToastMessage("회원가입 성공!")
+            val intent = Intent(this@SignUpActivity, SignUpProfileActivity::class.java)
+            intent.putExtra("nickname", response.postSignUpResult?.nickname)
+            intent.putExtra("memberId",response.postSignUpResult?.id)
+            startActivity(intent)
             finish() //왜냐 액티비티에서 전달할때 finish하지 않앗기 때문에 로그인 창이 다시 onResume이 됨.
         }
         else{
@@ -191,4 +192,6 @@ class SignUpActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
 
     override fun onPostLoginSuccess(response: PostLoginResponse) {}
     override fun onPostLoginFailure(message: String) {}
+    override fun onPostSignuUpProfileSuccess(response: PostSignUpProfileResponse) {}
+    override fun onPostSignUpProfileFailure(message: String) {}
 }
