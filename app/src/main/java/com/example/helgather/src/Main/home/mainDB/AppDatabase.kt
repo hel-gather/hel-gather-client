@@ -1,4 +1,4 @@
-package com.example.helgather.src.Main.MainDB
+package com.example.helgather.src.Main.home.mainDB
 
 import android.content.Context
 import androidx.room.Database

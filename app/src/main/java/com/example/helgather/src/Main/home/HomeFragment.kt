@@ -1,4 +1,4 @@
-package com.example.helgather.src.Main
+package com.example.helgather.src.Main.home
 
 import android.Manifest
 import android.app.AlertDialog
@@ -20,8 +20,8 @@ import androidx.lifecycle.lifecycleScope
 import com.example.helgather.R
 import com.example.helgather.config.BaseFragment
 import com.example.helgather.databinding.FragmentHomeBinding
-import com.example.helgather.src.Main.MainDB.AppDatabase
-import com.example.helgather.src.Main.MainDB.ImageEntity
+import com.example.helgather.src.Main.home.mainDB.AppDatabase
+import com.example.helgather.src.Main.home.mainDB.ImageEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -34,15 +34,14 @@ import java.util.Locale
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,R.layout.fragment_home) {
 
-//    private val PERMISSION_REQUEST_CODE = 100
-//    private val CAMERA_REQUEST_CODE = 101
-//    private val GALLERY_REQUEST_CODE = 102
     private lateinit var currentPhotoPath: String
 
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.ibtnHomeAuth.setImageResource(R.drawable.ic_auth_done)
 
 
 
@@ -85,9 +84,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
     private fun hasPermissions(): Boolean {
         val permissions = arrayOf(
-            Manifest.permission.CAMERA,
-//            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//            Manifest.permission.READ_EXTERNAL_STORAGE
+            Manifest.permission.CAMERA
         )
         for (permission in permissions) {
             if (ContextCompat.checkSelfPermission(requireContext(), permission) != PackageManager.PERMISSION_GRANTED) {
@@ -100,8 +97,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
     @RequiresApi(Build.VERSION_CODES.P)
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
         if (permissions[Manifest.permission.CAMERA] == true
-//            && permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE] == true &&
-//            permissions[Manifest.permission.READ_EXTERNAL_STORAGE] == true
         ) {
             // 모든 권한이 부여되었습니다.
             showPictureDialog()

@@ -1,4 +1,4 @@
-package com.example.helgather.src.Main.MainDB
+package com.example.helgather.src.Main.home.mainDB
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
