@@ -68,41 +68,31 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/iv_home_auth_frame"
+            <ImageButton
+                android:id="@+id/ibtn_home_auth"
                 android:layout_width="0dp"
-                android:layout_height="250dp"
+                android:layout_height="220dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="15dp"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tv_home_auth_title"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_home_auth_title"
-                app:srcCompat="@drawable/ic_home_auth" />
+                app:srcCompat="@drawable/ic_auth_yet" />
 
             <ImageView
                 android:id="@+id/iv_home_auth_health"
-                android:layout_width="137dp"
-                android:layout_height="146dp"
+                android:layout_width="190dp"
+                android:layout_height="190dp"
                 android:layout_marginStart="30dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_home_auth_frame"
-                app:layout_constraintStart_toStartOf="@+id/iv_home_auth_frame"
-                app:layout_constraintTop_toTopOf="@+id/iv_home_auth_frame"
-                app:srcCompat="@drawable/ic_home_auth_health" />
-
-            <TextView
-                android:id="@+id/tv_home_auth_isDone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:fontFamily="@font/noto_sans"
-                android:text="인증 완료!"
-                android:textColor="@color/app_color"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/iv_home_auth_frame"
-                app:layout_constraintHorizontal_bias="0.65"
-                app:layout_constraintStart_toStartOf="@+id/iv_home_auth_frame"
-                app:layout_constraintTop_toTopOf="@+id/iv_home_auth_frame" />
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="@+id/ibtn_home_auth"
+                app:layout_constraintStart_toStartOf="@+id/ibtn_home_auth"
+                app:layout_constraintTop_toTopOf="@+id/ibtn_home_auth"
+                app:layout_constraintVertical_bias="0.181" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -113,8 +103,8 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/iv_home_auth_frame"
-                app:layout_constraintTop_toBottomOf="@+id/iv_home_auth_frame" />
+                app:layout_constraintStart_toStartOf="@+id/ibtn_home_auth"
+                app:layout_constraintTop_toBottomOf="@+id/ibtn_home_auth" />
 
             <ImageView
                 android:id="@+id/imageView"
@@ -127,6 +117,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView6"
                 tools:srcCompat="@tools:sample/avatars" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

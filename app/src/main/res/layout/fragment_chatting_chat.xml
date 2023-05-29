@@ -31,15 +31,17 @@
         android:id="@+id/tv_chatting_chat_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/noto_sans"
         android:text="아이디"
         android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
+        app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="@+id/iv_chatting_chat_back"
         app:layout_constraintStart_toEndOf="@+id/iv_chatting_chat_back"
-        app:layout_constraintTop_toTopOf="@+id/iv_chatting_chat_back" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/divider3"
