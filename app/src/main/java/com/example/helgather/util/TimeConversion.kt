@@ -18,6 +18,9 @@ class TimeConversion {
         }
         @SuppressLint("SimpleDateFormat")
         fun intervalBetweenDateText(beforeDate: String): String {
+            if(beforeDate.isNullOrEmpty())
+                return ""
+
             //현재 시간
             val nowFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(getTime())
 //            val beforeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(beforeDate)
