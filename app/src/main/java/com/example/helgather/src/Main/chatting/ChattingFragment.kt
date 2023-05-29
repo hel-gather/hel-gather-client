@@ -39,7 +39,7 @@ class ChattingFragment : BaseFragment<FragmentChattingBinding>(FragmentChattingB
                     view.root.setOnClickListener {
                         val sSharedPref = sSharedPreferences.edit()
                         sSharedPref.putInt("chatId",response.ChatRoomResult[pos].chatId) // 채팅방 아이디
-                        sSharedPref.putString("chatName",response.ChatRoomResult[pos].id)
+                        sSharedPref.putString("chatName",response.ChatRoomResult[pos].title)
                         sSharedPref.apply()
                         parentFragmentManager.beginTransaction().replace(R.id.frm_main,ChattingMessageFragment()).addToBackStack("Chatting").commit()
                     }
