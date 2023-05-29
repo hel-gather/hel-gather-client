@@ -50,6 +50,8 @@ class SignUpImageActivity : BaseActivity<ActivitySignupImageBinding>(ActivitySig
 
         memberId = intent.getIntExtra("memberId",0)
 
+        binding.btnSignUpImageSkip.setOnClickListener { finish() }
+
 
         requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             if (permissions[Manifest.permission.CAMERA] == true) {
@@ -167,8 +169,6 @@ class SignUpImageActivity : BaseActivity<ActivitySignupImageBinding>(ActivitySig
 
     override fun onPostSignUpImageSuccess(response: PostSignUpImageResponse) {
         if (response.code == 200) {
-            val intent = Intent(this@SignUpImageActivity, MainActivity::class.java)
-            startActivity(intent)
             finish()
         }
         Log.d("----", "${response.postSignUpImageResult}")

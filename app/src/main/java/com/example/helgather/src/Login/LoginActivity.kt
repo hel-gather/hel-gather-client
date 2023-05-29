@@ -55,11 +55,13 @@ class LoginActivity:BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::inf
             val sharedPref = sSharedPreferences.edit()
             sharedPref.putInt("memberId",response.postLoginResult!!.memberId)
             sharedPref.putString("Authorization",(response.postLoginResult.grantType + " "+response.postLoginResult.accessToken))
+            sharedPref.putString("memberName",binding.edtLoginNickname.text.toString())
             if(binding.cbLoginAutoLogin.isChecked){
                 sharedPref.putBoolean("autoLogin", true)
             }else{
                 sharedPref.putBoolean("autoLogin", false)
             }
+
             sharedPref.apply()
             val intent = Intent(this@LoginActivity, MainActivity::class.java)
             showToastMessage("로그인 성공!")
