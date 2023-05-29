@@ -42,6 +42,7 @@ class ChattingChatAdapter(var messages: MutableList<ChatMessageResult>,private v
     }
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         holder.bind(messages[position])
+
     }
 
     override fun getItemCount(): Int {
@@ -51,11 +52,13 @@ class ChattingChatAdapter(var messages: MutableList<ChatMessageResult>,private v
         fun bind(chatMessage: ChatMessageResult){
             when(binding){
                 is ChattingMineListBinding ->{
-                    binding.tvChattingMine.text = chatMessage.message
+                    val wrappedText = filterAndWrapText(chatMessage.message,25)
+                    binding.tvChattingMine.text = wrappedText
                     binding.tvChattingMineWhen.text = TimeConversion.datetoTime(chatMessage.time)
                 }
                 is ChattingOtherListBinding -> {
-                    binding.tvChattingOtherMessage.text = chatMessage.message
+                    val wrappedText = filterAndWrapText(chatMessage.message,25)
+                    binding.tvChattingOtherMessage.text = wrappedText
                     binding.tvChattingOtherWhen.text = TimeConversion.datetoTime(chatMessage.time)
                     Glide.with(itemView).load(chatMessage.userProfile)
                         .placeholder(R.drawable.ic_btm_profile) // 로드되기 전에 표시할 이미지
@@ -74,34 +77,25 @@ class ChattingChatAdapter(var messages: MutableList<ChatMessageResult>,private v
             }
         }
     }
+    private fun filterAndWrapText(text: String, maxLineLength: Int): String {
+        val words = text.split(" ")
+        val lines = mutableListOf<String>()
+        var currentLine = ""
 
-    fun addMessage(message: ChatMessageResult) {
-        messages.add(messages.size-1, message)
-        notifyItemInserted(messages.size - 1)
-    }
-
-
-    class DiffCallback(private val oldList: List<ChatMessageResult>, private val newList: List<ChatMessageResult>) : DiffUtil.Callback() {
-
-        override fun getOldListSize(): Int {
-            return oldList.size
+        for (word in words) {
+            if ((currentLine + word).length <= maxLineLength) {
+                currentLine += "$word "
+            } else {
+                lines.add(currentLine.trim())
+                currentLine = "$word "
+            }
         }
 
-        override fun getNewListSize(): Int {
-            return newList.size
+        if (currentLine.isNotEmpty()) {
+            lines.add(currentLine.trim())
         }
 
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            val oldItem = oldList[oldItemPosition]
-            val newItem = newList[newItemPosition]
-            return oldItem.time == newItem.time // 시간을 기준으로 아이템이 동일한지 비교
-        }
-
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            val oldItem = oldList[oldItemPosition]
-            val newItem = newList[newItemPosition]
-            return oldItem == newItem // 아이템의 내용이 동일한지 비교 (equals 메서드 호출)
-        }
+        return lines.joinToString("\n")
     }
 
 }
