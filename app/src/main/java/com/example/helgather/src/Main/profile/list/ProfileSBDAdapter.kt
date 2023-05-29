@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.helgather.R
 import com.example.helgather.databinding.ProfileSbdListBinding
 import com.example.helgather.src.Main.profile.model.GetSBDResult
 import com.example.helgather.src.Main.profile.model.ProfileSBDTest
@@ -42,7 +43,10 @@ class ProfileSBDAdapter(var getSBDResult: List<GetSBDResult>,private val clickLi
     inner class SBDViewHolder(val binding : ProfileSbdListBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(getSBDResult: GetSBDResult){
             binding.tvSbdTitle.text = getSBDResult.category
-            Glide.with(itemView).load(getSBDResult.thumbNailUrl).into(binding.ivSbdPreview)
+            Glide.with(itemView)
+                .load(getSBDResult.thumbNailUrl.ifEmpty { R.drawable.ic_sbd_auth })
+                .fitCenter()
+                .into(binding.ivSbdPreview)
         }
     }
 }

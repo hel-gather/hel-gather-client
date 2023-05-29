@@ -54,6 +54,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<Array<String>>
     private lateinit var takePhotoLauncher: ActivityResultLauncher<Uri>
     private lateinit var choosePhotoLauncher: ActivityResultLauncher<String>
+
+
     private var uploadType = 0 // 1 -> 프로필 사진 편집, 2 오늘의 운동 인증
 
     @RequiresApi(Build.VERSION_CODES.P)
