@@ -51,7 +51,7 @@ import java.util.Date
 
 
             viewModel.messageList.observe(viewLifecycleOwner) { messages ->
-                chatAdapter = ChattingChatAdapter(messages, 1)
+                chatAdapter = ChattingChatAdapter(messages, memberId)
                 binding.rvChattingChat.apply {
                     adapter = chatAdapter
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
