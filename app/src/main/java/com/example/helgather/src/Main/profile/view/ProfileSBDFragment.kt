@@ -85,8 +85,7 @@ class ProfileSBDFragment : BaseFragment<FragmentProfileSbdBinding> (FragmentProf
                 val videoBody = MultipartBody.Part.createFormData("file", "video.mp4", videoRequestBody)
 
                 // Call your service here to upload the video.
-                ProfileService(this@ProfileSBDFragment).tryPostExercise(memberId, videoBody)
-                LoadingDialog(requireContext()).show()
+                ProfileService(this@ProfileSBDFragment).tryPostSBD(memberId,sbd,videoBody)
             } else {
                 showToastMessage("영상을 선택하는 과정에서 오류가 발생하였습니다.")
             }
@@ -147,11 +146,10 @@ class ProfileSBDFragment : BaseFragment<FragmentProfileSbdBinding> (FragmentProf
         binding.rvProfileSbd.apply {
             adapter = ProfileSBDAdapter(response.getSBDResult,object : ProfileSBDAdapter.ProfileSBDClickListener<GetSBDResult>{
                 override fun onUploadClick(view: ProfileSbdListBinding, pos: Int) {
-                    sbd = response.getSBDResult[pos].category
+                    sbd = response.getSBDResult[pos].category.lowercase()
                     //여기에 이제 통신을 해야함
                     showVideoDialog()
-//                    ProfileService(this@ProfileSBDFragment).tryPostSBD(memberId,sbd)
-//                    LoadingDialog(requireContext()).show()
+
                 }
 
                 override fun onVideoClick(view: ProfileSbdListBinding, pos: Int) {
@@ -177,13 +175,11 @@ class ProfileSBDFragment : BaseFragment<FragmentProfileSbdBinding> (FragmentProf
         Log.d("postSBD",response.isSuccess.toString())
         Log.d("postSBD",response.code.toString())
         Log.d("postSBD",response.postSBDResult.toString())
-        LoadingDialog(requireContext()).dismiss()
 
     }
 
     override fun onPostSBDFailure(message: String) {
         showToastMessage("오류 : $message")
-        LoadingDialog(requireContext()).dismiss()
     }
 
     override fun onGetTodayExerciseSuccess(response: GetTodayExerciseResponse) {}
