@@ -9,6 +9,7 @@ import com.example.helgather.src.Main.profile.model.PatchProfileImageResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileIntroductionRequest
 import com.example.helgather.src.Main.profile.model.PatchProfileIntroductionResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileIntroductionResult
+import com.example.helgather.src.Main.profile.model.PostSBDResponse
 import com.example.helgather.src.Main.profile.model.PostTodayExerciseResponse
 import com.example.helgather.src.Main.profile.model.PostTodayExerciseResult
 import com.google.gson.Gson
@@ -176,6 +177,36 @@ class ProfileService(val profileFragmentInterface : ProfileFragmentInterface) {
 
             override fun onFailure(call: Call<GetProfileResponse>, t: Throwable) {
                 profileFragmentInterface.onGetProfileFailure(t.message ?: "통신 오류")
+            }
+        })
+    }
+
+    fun tryPostSBD(memberId: Int, category: String,video : MultipartBody.Part) {
+        val profileRetrofitInterface = ApplicationClass.sRetrofit.create(ProfileRetrofitInterface::class.java)
+        profileRetrofitInterface.postSBD(memberId, category,video).enqueue(object : Callback<PostSBDResponse> {
+            override fun onResponse(
+                call: Call<PostSBDResponse>,
+                response: Response<PostSBDResponse>
+            ) {
+                if (response.isSuccessful) {
+                    profileFragmentInterface.onPostSBDSuccess(response.body() as PostSBDResponse)
+                } else {
+                    val gson = Gson()
+                    val errorBodyStr = response.errorBody()?.string()
+                    val errorResponse = gson.fromJson(errorBodyStr, PostSBDResponse::class.java)
+                    val postSBDResult = errorResponse.postSBDResult
+                    val postSBDResponse = PostSBDResponse(
+                        false,
+                        errorResponse.code,
+                        errorResponse.message,
+                        postSBDResult
+                    )
+                    profileFragmentInterface.onPostSBDSuccess(postSBDResponse)
+                }
+            }
+
+            override fun onFailure(call: Call<PostSBDResponse>, t: Throwable) {
+                profileFragmentInterface.onPostSBDFailure(t.message ?: "통신 오류")
             }
         })
     }

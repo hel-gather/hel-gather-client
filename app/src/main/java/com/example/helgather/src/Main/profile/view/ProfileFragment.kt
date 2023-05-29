@@ -33,6 +33,7 @@ import com.example.helgather.src.Main.profile.model.GetSBDResponse
 import com.example.helgather.src.Main.profile.model.GetTodayExerciseResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileImageResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileIntroductionResponse
+import com.example.helgather.src.Main.profile.model.PostSBDResponse
 import com.example.helgather.src.Main.profile.model.PostTodayExerciseResponse
 import com.example.helgather.util.ImageUtil
 import com.google.android.material.tabs.TabLayoutMediator
@@ -266,4 +267,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     override fun onPatchProfileImageFailure(message: String) {}
     override fun onPatchProfileIntroductionSuccess(response: PatchProfileIntroductionResponse) {}
     override fun onPatchProfileIntroductionFailure(message: String) {}
+
+    override fun onPostSBDSuccess(response: PostSBDResponse) {}
+
+    override fun onPostSBDFailure(message: String) {}
 }

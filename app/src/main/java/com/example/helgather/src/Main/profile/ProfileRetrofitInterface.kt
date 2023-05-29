@@ -7,6 +7,7 @@ import com.example.helgather.src.Main.profile.model.PatchProfileImageResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileIntroductionRequest
 import com.example.helgather.src.Main.profile.model.PatchProfileIntroductionResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileIntroductionResult
+import com.example.helgather.src.Main.profile.model.PostSBDResponse
 import com.example.helgather.src.Main.profile.model.PostTodayExerciseResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -46,5 +47,13 @@ interface ProfileRetrofitInterface {
 
     @GET("/members/profile/{memberId}")
     fun getProfile(@Path("memberId")memberId : Int) : Call<GetProfileResponse>
+
+    @Multipart
+    @POST("/sbd")
+    fun postSBD(
+        @Query("member") memberId: Int,
+        @Query("category") category: String,
+        @Part file : MultipartBody.Part
+    ): Call<PostSBDResponse>
 
 }

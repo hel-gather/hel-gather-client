@@ -5,6 +5,7 @@ import com.example.helgather.src.Main.profile.model.GetSBDResponse
 import com.example.helgather.src.Main.profile.model.GetTodayExerciseResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileImageResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileIntroductionResponse
+import com.example.helgather.src.Main.profile.model.PostSBDResponse
 import com.example.helgather.src.Main.profile.model.PostTodayExerciseResponse
 
 interface ProfileFragmentInterface {
@@ -26,5 +27,8 @@ interface ProfileFragmentInterface {
 
     fun onGetProfileSuccess(response : GetProfileResponse)
     fun onGetProfileFailure(message: String)
+
+    fun onPostSBDSuccess(response : PostSBDResponse)
+    fun onPostSBDFailure(message :String)
 
 }

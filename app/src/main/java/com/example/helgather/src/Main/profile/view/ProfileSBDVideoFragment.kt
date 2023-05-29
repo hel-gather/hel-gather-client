@@ -62,4 +62,9 @@ class ProfileSBDVideoFragment : BaseFragment<FragmentSbdVideoBinding>(FragmentSb
         mainAct.hideBottomNavi(true)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        parentFragmentManager.popBackStack()
+    }
+
 }

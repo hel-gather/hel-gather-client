@@ -16,6 +16,7 @@ import com.example.helgather.src.Main.profile.model.GetTodayExerciseResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileImageResponse
 import com.example.helgather.src.Main.profile.model.PatchProfileIntroductionRequest
 import com.example.helgather.src.Main.profile.model.PatchProfileIntroductionResponse
+import com.example.helgather.src.Main.profile.model.PostSBDResponse
 import com.example.helgather.src.Main.profile.model.PostTodayExerciseResponse
 
 class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>(FragmentProfileEditBinding::bind , R.layout.fragment_profile_edit),ProfileFragmentInterface {
@@ -91,9 +92,8 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>(FragmentPro
     override fun onGetSBDFailure(message: String) {}
     override fun onPatchProfileImageSuccess(response: PatchProfileImageResponse) {}
     override fun onPatchProfileImageFailure(message: String) {}
-    override fun onGetProfileSuccess(response: GetProfileResponse) {
-    }
-
-    override fun onGetProfileFailure(message: String) {
-    }
+    override fun onGetProfileSuccess(response: GetProfileResponse) {}
+    override fun onGetProfileFailure(message: String) {}
+    override fun onPostSBDSuccess(response: PostSBDResponse) {}
+    override fun onPostSBDFailure(message: String) {}
 }
