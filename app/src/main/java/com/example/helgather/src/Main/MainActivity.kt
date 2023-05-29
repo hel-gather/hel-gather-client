@@ -7,7 +7,7 @@ import com.example.helgather.config.BaseActivity
 import com.example.helgather.databinding.ActivityMainBinding
 import com.example.helgather.src.Main.chatting.ChattingFragment
 import com.example.helgather.src.Main.home.HomeFragment
-import com.example.helgather.src.Main.post.PostFragment
+import com.example.helgather.src.Main.recruit.RecruitFragment
 import com.example.helgather.src.Main.profile.view.ProfileFragment
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -73,7 +73,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                         selectedFragment = when (item.itemId) {
                             R.id.btm_home -> HomeFragment()
                             R.id.btm_chatting -> ChattingFragment()
-                            R.id.btm_post -> PostFragment()
+                            R.id.btm_post -> RecruitFragment()
                             R.id.btm_profile -> ProfileFragment()
                             else -> HomeFragment()
                         }

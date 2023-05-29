@@ -1,4 +1,4 @@
-package com.example.helgather.src.Main.post
+package com.example.helgather.src.Main.recruit
 
 import android.os.Bundle
 import android.text.Editable
@@ -9,7 +9,7 @@ import com.example.helgather.config.BaseFragment
 import com.example.helgather.databinding.FragmentPostWriteBinding
 import com.example.helgather.src.Main.MainActivity
 
-class PostWriteFragment : BaseFragment<FragmentPostWriteBinding>(FragmentPostWriteBinding::bind, R.layout.fragment_post_write) {
+class RecruitWriteFragment : BaseFragment<FragmentPostWriteBinding>(FragmentPostWriteBinding::bind, R.layout.fragment_post_write) {
 
     private var title : String ?= null
     private var locationCity : String ?= null

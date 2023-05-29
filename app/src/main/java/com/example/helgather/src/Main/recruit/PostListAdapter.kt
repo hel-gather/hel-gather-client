@@ -1,4 +1,4 @@
-package com.example.helgather.src.Main.post
+package com.example.helgather.src.Main.recruit
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

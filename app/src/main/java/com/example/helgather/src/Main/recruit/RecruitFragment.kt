@@ -1,15 +1,14 @@
-package com.example.helgather.src.Main.post
+package com.example.helgather.src.Main.recruit
 
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.helgather.R
 import com.example.helgather.config.BaseFragment
 import com.example.helgather.databinding.FragmentPostBinding
 import com.example.helgather.src.Main.MainActivity
 
-class PostFragment : BaseFragment<FragmentPostBinding>(FragmentPostBinding::bind , R.layout.fragment_post) {
+class RecruitFragment : BaseFragment<FragmentPostBinding>(FragmentPostBinding::bind , R.layout.fragment_post) {
 
     var postTestList = listOf<PostListResult>(
         PostListResult(1,"노균욱","이것은 제목 테스트 입니다.",12,"2023-05-21T04:20:19.883098"),
@@ -38,7 +37,7 @@ class PostFragment : BaseFragment<FragmentPostBinding>(FragmentPostBinding::bind
         postRecyclerView()
 
         binding.fabPostWriting.setOnClickListener {
-            parentFragmentManager.beginTransaction().add(R.id.frm_main,PostWriteFragment()).commit()
+            parentFragmentManager.beginTransaction().add(R.id.frm_main,RecruitWriteFragment()).commit()
         }
 
         //스와이프시 게시물 갱신

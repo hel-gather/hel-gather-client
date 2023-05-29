@@ -1,4 +1,4 @@
-package com.example.helgather.src.Main.post
+package com.example.helgather.src.Main.recruit
 
 data class PostListResult(
     var id : Int,
