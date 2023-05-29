@@ -1,8 +1,7 @@
 package com.example.helgather.src.Main.recruit
 
-import com.example.helgather.src.Main.recruit.models.GetRecruitAllResponse
-import com.example.helgather.src.Main.recruit.models.GetRecruitDetailResponse
 import com.example.helgather.src.Main.recruit.models.GetRecruitLocationResponse
+import com.example.helgather.src.Main.recruit.models.GetRecruitDetailResponse
 import com.example.helgather.src.Main.recruit.models.PostRecruitChatRequest
 import com.example.helgather.src.Main.recruit.models.PostRecruitChatResponse
 import com.example.helgather.src.Main.recruit.models.PostRecruitDetailRequest
@@ -17,7 +16,7 @@ import retrofit2.http.Query
 interface RecruitRetrofitInterface {
 
     @GET("/recruitments/all")
-    fun getRecruitAll(): Call<GetRecruitAllResponse>
+    fun getRecruitAll(): Call<GetRecruitLocationResponse>
 
     @GET("/recruitments")
     fun getRecruitLocation(

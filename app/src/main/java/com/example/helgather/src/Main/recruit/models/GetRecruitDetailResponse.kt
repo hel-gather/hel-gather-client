@@ -6,5 +6,5 @@ data class GetRecruitDetailResponse(
     val isSuccess: Boolean,
     val code: Int,
     val message: String,
-    @SerializedName("result")val getRecruitDetailResult: GetRecruitDetailResult
+    @SerializedName("result")val getRecruitDetailResult : GetRecruitDetailResult
 )

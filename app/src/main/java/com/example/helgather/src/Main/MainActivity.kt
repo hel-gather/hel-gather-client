@@ -7,7 +7,7 @@ import com.example.helgather.config.BaseActivity
 import com.example.helgather.databinding.ActivityMainBinding
 import com.example.helgather.src.Main.chatting.ChattingFragment
 import com.example.helgather.src.Main.home.HomeFragment
-import com.example.helgather.src.Main.recruit.RecruitFragment
+import com.example.helgather.src.Main.recruit.view.RecruitFragment
 import com.example.helgather.src.Main.profile.view.ProfileFragment
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {

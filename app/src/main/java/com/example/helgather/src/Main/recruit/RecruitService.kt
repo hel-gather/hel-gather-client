@@ -1,9 +1,9 @@
 package com.example.helgather.src.Main.recruit
 
 import com.example.helgather.config.ApplicationClass
-import com.example.helgather.src.Main.recruit.models.GetRecruitAllResponse
-import com.example.helgather.src.Main.recruit.models.GetRecruitDetailResponse
 import com.example.helgather.src.Main.recruit.models.GetRecruitLocationResponse
+import com.example.helgather.src.Main.recruit.models.GetRecruitDetailResponse
+import com.example.helgather.src.Main.recruit.models.GetRecruitLocationResult
 import com.example.helgather.src.Main.recruit.models.PostRecruitChatRequest
 import com.example.helgather.src.Main.recruit.models.PostRecruitChatResponse
 import com.example.helgather.src.Main.recruit.models.PostRecruitDetailRequest
@@ -18,21 +18,21 @@ class RecruitService(val recruitFragmentInterface: RecruitFragmentInterface) {
 
     fun tryGetRecruitAll() {
         val recruitRetrofitInterface = ApplicationClass.sRetrofit.create(RecruitRetrofitInterface::class.java)
-        recruitRetrofitInterface.getRecruitAll().enqueue(object : Callback<GetRecruitAllResponse> {
-            override fun onResponse(call: Call<GetRecruitAllResponse>, response: Response<GetRecruitAllResponse>) {
+        recruitRetrofitInterface.getRecruitAll().enqueue(object : Callback<GetRecruitLocationResponse> {
+            override fun onResponse(call: Call<GetRecruitLocationResponse>, response: Response<GetRecruitLocationResponse>) {
                 if (response.isSuccessful) {
-                    recruitFragmentInterface.onGetRecruitAllSuccess(response.body() as GetRecruitAllResponse)
+                    recruitFragmentInterface.onGetRecruitAllSuccess(response.body() as GetRecruitLocationResponse)
                 } else {
                     val gson = Gson()
                     val errorBodyStr = response.errorBody()?.string()
-                    val errorResponse = gson.fromJson(errorBodyStr, GetRecruitAllResponse::class.java)
-                    val getRecruitAllResult = errorResponse.getRecruitAllResult
-                    val getRecruitAllResponse = GetRecruitAllResponse(false, errorResponse.code, errorResponse.message, getRecruitAllResult)
-                    recruitFragmentInterface.onGetRecruitAllSuccess(getRecruitAllResponse)
+                    val errorResponse = gson.fromJson(errorBodyStr, GetRecruitLocationResponse::class.java)
+                    val getRecruitLocationResult = errorResponse.getRecruitLocationResult
+                    val getRecruitLocationResponse = GetRecruitLocationResponse(false, errorResponse.code, errorResponse.message, getRecruitLocationResult)
+                    recruitFragmentInterface.onGetRecruitAllSuccess(getRecruitLocationResponse)
                 }
             }
 
-            override fun onFailure(call: Call<GetRecruitAllResponse>, t: Throwable) {
+            override fun onFailure(call: Call<GetRecruitLocationResponse>, t: Throwable) {
                 recruitFragmentInterface.onGetRecruitAllFailure(t.message ?: "통신 오류")
             }
         })
@@ -81,6 +81,7 @@ class RecruitService(val recruitFragmentInterface: RecruitFragmentInterface) {
             }
         })
     }
+
 
     fun tryPostRecruitDetail(request: PostRecruitDetailRequest) {
         val recruitRetrofitInterface = ApplicationClass.sRetrofit.create(RecruitRetrofitInterface::class.java)

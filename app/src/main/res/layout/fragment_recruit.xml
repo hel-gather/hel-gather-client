@@ -5,6 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/tv_post_location_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/noto_sans"
+        android:text="위치"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider5" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_post_location"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/rectangle_round_border_appbrighter"
+        android:drawableEnd="@drawable/ic_location"
+        android:text="위치 선택"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_post_location_title"
+        app:layout_constraintStart_toEndOf="@+id/tv_post_location_title"
+        app:layout_constraintTop_toTopOf="@+id/tv_post_location_title" />
+
+    <TextView
+        android:id="@+id/tv_post_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/rectangle_border_gray"
+        android:fontFamily="@font/noto_sans"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_post_location"
+        app:layout_constraintStart_toEndOf="@+id/btn_post_location"
+        app:layout_constraintTop_toTopOf="@+id/btn_post_location" />
+
+    <TextView
+        android:id="@+id/tv_post_subLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/rectangle_border_gray"
+        android:fontFamily="@font/noto_sans"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_post_location"
+        app:layout_constraintStart_toEndOf="@+id/tv_post_location"
+        app:layout_constraintTop_toTopOf="@+id/tv_post_location" />
+
     <View
         android:id="@+id/view2"
         android:layout_width="0dp"
@@ -58,35 +113,24 @@
         android:id="@+id/ibtn_post_search"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="25dp"
+        android:layout_marginEnd="20dp"
         android:background="@color/app_brighter_color"
         android:scaleType="fitEnd"
         app:layout_constraintBottom_toTopOf="@+id/divider5"
-        app:layout_constraintEnd_toStartOf="@+id/ibtn_post_recruiment"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_search" />
-
-    <ImageButton
-        android:id="@+id/ibtn_post_recruiment"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="25dp"
-        android:background="@android:color/transparent"
-        android:scaleType="fitEnd"
-        app:layout_constraintBottom_toTopOf="@+id/divider5"
-        app:layout_constraintEnd_toEndOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_recruiment" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/srl_post"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2">
+        app:layout_constraintTop_toBottomOf="@+id/tv_post_location_title">
 
 
         <androidx.recyclerview.widget.RecyclerView

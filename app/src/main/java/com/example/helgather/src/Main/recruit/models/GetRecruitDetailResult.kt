@@ -7,4 +7,5 @@ data class GetRecruitDetailResult(
     val nickname: String,
     val recruitmentId: Int,
     val title: String
+
 )
