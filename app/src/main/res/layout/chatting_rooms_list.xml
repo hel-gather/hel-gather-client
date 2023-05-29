@@ -18,15 +18,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_chatting_profile"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="15dp"
+        android:src="@drawable/ic_blank_profile"
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toTopOf="@+id/view"
-        app:srcCompat="@drawable/btm_profile_selector" />
+        app:civ_border_width="1dp"/>
 
     <TextView
         android:id="@+id/tv_chatting_id"

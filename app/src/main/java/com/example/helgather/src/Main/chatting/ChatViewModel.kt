@@ -16,14 +16,15 @@ class ChatViewModel : ViewModel() {
     }
 
     fun addMessage(message: ChatMessageResult) {
-        _messageList.value?.add(message)
-        _messageList.value = _messageList.value
+        val currentValue = _messageList.value ?: mutableListOf()
+        currentValue.add(message)
+        _messageList.postValue(currentValue)
     }
 
     fun addMessageList(messages: List<ChatMessageResult>) {
         val currentMessages = _messageList.value ?: mutableListOf()
         currentMessages.addAll(messages)
-        _messageList.value = currentMessages
+        _messageList.postValue(currentMessages)
     }
 
     fun addMessageFromJson(jsonString: String) {
@@ -33,3 +34,31 @@ class ChatViewModel : ViewModel() {
         addMessage(message)
     }
 }
+
+
+//class ChatViewModel : ViewModel() {
+//    private val _messageList = MutableLiveData<MutableList<ChatMessageResult>>()
+//    val messageList: LiveData<MutableList<ChatMessageResult>> = _messageList
+//
+//    init {
+//        _messageList.value = mutableListOf()
+//    }
+//
+//    fun addMessage(message: ChatMessageResult) {
+//        _messageList.value?.add(message)
+//        _messageList.value = _messageList.value
+//    }
+//
+//    fun addMessageList(messages: List<ChatMessageResult>) {
+//        val currentMessages = _messageList.value ?: mutableListOf()
+//        currentMessages.addAll(messages)
+//        _messageList.value = currentMessages
+//    }
+//
+//    fun addMessageFromJson(jsonString: String) {
+//        val gson = Gson()
+//        val message = gson.fromJson(jsonString, ChatMessageResult::class.java)
+//        Log.d("websocketmessage",message.toString())
+//        addMessage(message)
+//    }
+//}

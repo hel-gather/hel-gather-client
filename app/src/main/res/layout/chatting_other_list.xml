@@ -9,8 +9,7 @@
         android:id="@+id/tv_chatting_other_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="50dp"
         android:background="@drawable/rectangle_stroke_appconstantcolor"
         android:paddingStart="10dp"
         android:paddingTop="10dp"
@@ -19,8 +18,9 @@
         android:text="상대방 채팅입니다."
         android:textColor="@color/black"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_chatting_other_profile"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/iv_chatting_other_profile" />
 
     <TextView
         android:id="@+id/tv_chatting_other_when"
@@ -32,13 +32,18 @@
         app:layout_constraintBottom_toBottomOf="@+id/tv_chatting_other_message"
         app:layout_constraintStart_toEndOf="@+id/tv_chatting_other_message" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_chatting_other_profile"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_btm_profile"
+        android:visibility="visible"
+        app:civ_border_color="#686868"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_btm_profile" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

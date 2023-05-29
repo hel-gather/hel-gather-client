@@ -21,99 +21,113 @@ import com.example.helgather.src.Main.chatting.models.ChatRoomResponse
 import okhttp3.OkHttpClient
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.StompClient
+import ua.naiksoftware.stomp.dto.StompHeader
 import java.text.SimpleDateFormat
 import java.util.Date
 
     class ChattingMessageFragment : BaseFragment<FragmentChattingChatBinding>
-    (FragmentChattingChatBinding::bind, R.layout.fragment_chatting_chat), ChattingFragmentInterface {
+        (FragmentChattingChatBinding::bind, R.layout.fragment_chatting_chat), ChattingFragmentInterface {
 
 
-    private val stompManager: StompManager = StompManager()
-    private lateinit var mStompClient: StompClient
-    val chatId = ApplicationClass.sSharedPreferences.getInt("chatId",1)
-    val memberId = ApplicationClass.sSharedPreferences.getInt("memberId",2)
-    val chatName = ApplicationClass.sSharedPreferences.getString("chatName","채팅방")
-    private val viewModel: ChatViewModel by viewModels()
-    private lateinit var chatAdapter: ChattingChatAdapter
+        private val stompManager: StompManager = StompManager()
+        private lateinit var mStompClient: StompClient
+        val chatId = ApplicationClass.sSharedPreferences.getInt("chatId",1)
+        val memberId = ApplicationClass.sSharedPreferences.getInt("memberId",2)
+        val chatName = ApplicationClass.sSharedPreferences.getString("chatName","채팅방")
+        private val viewModel: ChatViewModel by viewModels()
+        private lateinit var chatAdapter: ChattingChatAdapter
 
-    @SuppressLint("CheckResult")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        @SuppressLint("CheckResult")
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
 
-        binding.tvChattingChatId.text = chatName
+            binding.tvChattingChatId.text = chatName
 
-        ChattingService(this@ChattingMessageFragment).tryGetChattingMessage(chatId = chatId, memberId = memberId)
+            ChattingService(this@ChattingMessageFragment).tryGetChattingMessage(chatId = chatId, memberId = memberId)
 
-        // mStompClient 초기화
-        mStompClient = stompManager.connectStomp(chatId)
+            // mStompClient 초기화
+            mStompClient = stompManager.connectStomp(chatId)
 
 
 
-        viewModel.messageList.observe(viewLifecycleOwner) { messages ->
-            chatAdapter = ChattingChatAdapter(messages, memberId)
-            binding.rvChattingChat.apply {
-                adapter = chatAdapter
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            viewModel.messageList.observe(viewLifecycleOwner) { messages ->
+                chatAdapter = ChattingChatAdapter(messages, 1)
+                binding.rvChattingChat.apply {
+                    adapter = chatAdapter
+                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-                post {
-                    scrollToPosition(messages.size - 1)
+                    post {
+                        scrollToPosition(messages.size - 1)
+                    }
                 }
             }
-        }
 
-        val topic = "/sub/chats/$chatId"
-        // 메시지를 받을 때의 Listener를 설정
-        val subscribe = mStompClient.topic(topic).subscribe { topicMessage ->
-            Log.d("webSocketID",chatId.toString())
-            val receivedMessage = topicMessage.payload
-            // 메시지를 받았을 때의 동작을 여기에 작성
-            viewModel.addMessageFromJson(receivedMessage)
-        }
+            val topic = "/sub/chatroom/$chatId"
 
-        messageControl()
-    }
-    override fun onResume() {
-        super.onResume()
-        //바텀네비게이션 바 숨김
-        val mainAct = activity as MainActivity
-        mainAct.hideBottomNavi(true)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        stompManager.disconnectStomp()
-    }
-    override fun onBackPressed() {
-        parentFragmentManager.popBackStack()
-    }
-    @SuppressLint("SimpleDateFormat")
-    private fun messageControl(){
-        binding.edtChatMessage.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val text = s.toString()
-                binding.ivChatSend.isEnabled = text.isNotEmpty()
+            if(mStompClient.isConnected){
+                Log.d("---aaaa","---")
+            }else{ Log.d("----aaa", "----")
 
             }
-
-            override fun afterTextChanged(s: Editable?) {
+            // 메시지를 받을 때의 Listener를 설정
+            val subscribe = mStompClient.topic(topic).subscribe { topicMessage ->
+                Log.d("webSocketID",chatId.toString())
+                val receivedMessage = topicMessage.payload
+                // 메시지를 받았을 때의 동작을 여기에 작성
+                viewModel.addMessageFromJson(receivedMessage)
             }
-        })
-        binding.ivChatSend.setOnClickListener {
-            val message = binding.edtChatMessage.text.toString()
-            val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-            val currentTime = Date()
-            val formattedTime = outputFormat.format(currentTime)
-            Log.d("testtesttest","$message, $formattedTime, $memberId")
-            val chatMessage = ChatMessageResult(memberId,message, time = formattedTime,"",false)
-            viewModel.addMessage(chatMessage)
-            binding.edtChatMessage.text.clear()
-            stompManager.sendMessage(chatId, chatMessage)
+
+            // 구독 상태 확인
+            if (!subscribe.isDisposed) {
+                Log.d("----test","1")
+            } else {
+                Log.d("----test","2")
+            }
+
+            messageControl()
+        }
+        override fun onResume() {
+            super.onResume()
+            //바텀네비게이션 바 숨김
+            val mainAct = activity as MainActivity
+            mainAct.hideBottomNavi(true)
         }
 
-    }
+        override fun onDestroyView() {
+            super.onDestroyView()
+            stompManager.disconnectStomp()
+        }
+        override fun onBackPressed() {
+            parentFragmentManager.popBackStack()
+        }
+        @SuppressLint("SimpleDateFormat")
+        private fun messageControl(){
+            binding.edtChatMessage.addTextChangedListener(object : TextWatcher{
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    val text = s.toString()
+                    binding.ivChatSend.isEnabled = text.isNotEmpty()
+
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                }
+            })
+            binding.ivChatSend.setOnClickListener {
+                val message = binding.edtChatMessage.text.toString()
+                val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+                val currentTime = Date()
+                val formattedTime = outputFormat.format(currentTime)
+                Log.d("testtesttest","$message, $formattedTime, $memberId")
+                val chatMessage = ChatMessageResult(memberId,message, time = formattedTime, userProfile ="",false)
+//                viewModel.addMessage(chatMessage)
+                binding.edtChatMessage.text.clear()
+                stompManager.sendMessage(chatId, chatMessage)
+            }
+
+        }
 
 
     override fun onGetChatRoomSuccess(response: ChatRoomResponse) {}

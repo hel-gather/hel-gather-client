@@ -22,6 +22,7 @@ class ChattingFragment : BaseFragment<FragmentChattingBinding>(FragmentChattingB
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //memberId임시설정
         ChattingService(this@ChattingFragment).tryGetChattingRoom(memberId = memberId) //우선 임시적으로 1로 설정
     }
 

@@ -9,6 +9,10 @@ import retrofit2.http.Query
 
 interface ChattingRetrofitInterface {
 
+//    @GET("/members/{id}/chatrooms")
+//    fun getChatRoom(@Path("id")id : Int) : Call<ChatRoomResponse>
+
+
     @GET("/chats")
     fun getChatRoom(@Query("member")id : Int) : Call<ChatRoomResponse>
 
