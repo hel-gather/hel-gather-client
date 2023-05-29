@@ -50,11 +50,12 @@ class ProfileSBDFragment : BaseFragment<FragmentProfileSbdBinding> (FragmentProf
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<Array<String>>
 //    private lateinit var takeVideoLauncher: ActivityResultLauncher<Uri>
     private lateinit var chooseVideoLauncher: ActivityResultLauncher<String>
+    private lateinit var loadingDialog: LoadingDialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        loadingDialog = LoadingDialog(requireContext())
         memberId = ApplicationClass.sSharedPreferences.getInt("memberId",0)
 
         requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -86,6 +87,7 @@ class ProfileSBDFragment : BaseFragment<FragmentProfileSbdBinding> (FragmentProf
 
                 // Call your service here to upload the video.
                 ProfileService(this@ProfileSBDFragment).tryPostSBD(memberId,sbd,videoBody)
+                loadingDialog.show()
             } else {
                 showToastMessage("영상을 선택하는 과정에서 오류가 발생하였습니다.")
             }
@@ -175,11 +177,12 @@ class ProfileSBDFragment : BaseFragment<FragmentProfileSbdBinding> (FragmentProf
         Log.d("postSBD",response.isSuccess.toString())
         Log.d("postSBD",response.code.toString())
         Log.d("postSBD",response.postSBDResult.toString())
-
+        loadingDialog.dismiss()
     }
 
     override fun onPostSBDFailure(message: String) {
         showToastMessage("오류 : $message")
+        loadingDialog.dismiss()
     }
 
     override fun onGetTodayExerciseSuccess(response: GetTodayExerciseResponse) {}

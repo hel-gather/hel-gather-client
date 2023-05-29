@@ -39,7 +39,7 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>(FragmentPro
         deadlift = bundle?.getString("deadlift")!!.toInt()
         introduction = bundle?.getString("introduction")!!
 
-        Log.d("profileTest2","$squat $benchpress $deadlift $introduction")
+        Log.d("profileTest2","memberId = $memberId $squat $benchpress $deadlift $introduction")
 
 
 
@@ -51,8 +51,12 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>(FragmentPro
 
 
         binding.btnProfileEditComplete.setOnClickListener {
+            squat = binding.edtProfileEditSquat.text.toString().toInt()
+            benchpress = binding.edtProfileEditBenchpress.text.toString().toInt()
+            deadlift = binding.edtProfileEdtDeadlift.text.toString().toInt()
+            introduction = binding.edtProfileEditIntroduction.text.toString()
             ProfileService(this@ProfileEditFragment)
-                .tryPatchIntroduction(memberId, PatchProfileIntroductionRequest(squat,benchpress,deadlift,introduction))
+                .tryPatchIntroduction(memberId, PatchProfileIntroductionRequest(introduction,benchpress,deadlift,squat))
         }
 
 
@@ -73,6 +77,7 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>(FragmentPro
 
     override fun onPatchProfileIntroductionSuccess(response: PatchProfileIntroductionResponse) {
         if(response.code == 200){
+            Log.d("profileTest3","memberId =${response.patchProfileIntroductionResult.toString()}")
             parentFragmentManager.popBackStack()
         }else{
             showToastMessage(response.message)
