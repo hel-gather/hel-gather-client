@@ -9,7 +9,7 @@
         android:id="@+id/view6"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/view_chat_gray"
+        android:background="@color/app_brighter_color"
         app:layout_constraintBottom_toTopOf="@id/divider9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

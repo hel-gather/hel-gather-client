@@ -19,7 +19,7 @@ import com.example.helgather.src.Main.recruit.models.PostRecruitDetailRequest
 import com.example.helgather.src.Main.recruit.models.PostRecruitDetailResponse
 import com.google.android.exoplayer2.util.Log
 
-class RecruitWriteFragment : BaseFragment<FragmentRecruitWriteBinding>(FragmentRecruitWriteBinding::bind, R.layout.fragment_recruit_write),
+class RecruitWriteFragment : BaseFragment<FragmentRecruitWriteBinding>(FragmentRecruitWriteBinding::bind, R.layout. fragment_recruit_write),
     RecruitFragmentInterface {
 
     private var title : String ?= null

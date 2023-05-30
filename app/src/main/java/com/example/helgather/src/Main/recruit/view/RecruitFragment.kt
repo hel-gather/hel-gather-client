@@ -26,6 +26,7 @@ class RecruitFragment : BaseFragment<FragmentRecruitBinding>(FragmentRecruitBind
     private var subLocation = 0
     var selectedRegion: String? = null
     private var selectedSubRegion: Pair<String, Int> = Pair("", 0)
+    private var otherId :Int = 0
 
 
 
@@ -77,11 +78,11 @@ class RecruitFragment : BaseFragment<FragmentRecruitBinding>(FragmentRecruitBind
 
         //스와이프시 게시물 갱신
         binding.srlPost.setOnRefreshListener {
-//            if(location != 0 && subLocation !=0){
-//
-//            }else{
-//
-//            }
+            if(location != 0 && subLocation !=0){
+                RecruitService(this@RecruitFragment).tryGetRecruitLocation(location,subLocation)
+            }else{
+                RecruitService(this@RecruitFragment).tryGetRecruitAll()
+            }
         }
         
     }
@@ -147,7 +148,11 @@ class RecruitFragment : BaseFragment<FragmentRecruitBinding>(FragmentRecruitBind
             binding.rvPost.apply {
                 adapter = RecruitListAdapter(response.getRecruitLocationResult,object : RecruitListAdapter.RecruitListItemClickListener {
                     override fun onItemClick(position: Int) {
-                        parentFragmentManager.beginTransaction().replace(R.id.frm_main,RecruitDetailFragment()).addToBackStack("recruitDetail").commit()
+                        val fragment = RecruitDetailFragment()
+                        val bundle = Bundle()
+                        bundle.putInt("recruitmentId", response.getRecruitLocationResult[position].recruitmentId)
+                        fragment.arguments = bundle
+                        parentFragmentManager.beginTransaction().replace(R.id.frm_main,fragment).addToBackStack("recruitDetail").commit()
                     }
                 })
                 layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
