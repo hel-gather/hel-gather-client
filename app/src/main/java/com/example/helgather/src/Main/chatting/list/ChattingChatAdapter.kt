@@ -64,15 +64,6 @@ class ChattingChatAdapter(var messages: MutableList<ChatMessageResult>,private v
                         .placeholder(R.drawable.ic_btm_profile) // 로드되기 전에 표시할 이미지
                         .error(R.drawable.ic_btm_profile)
                         .into(binding.ivChattingOtherProfile)
-//                    if (chatMessage.first) {
-//                        Log.d("testtestcat","----")
-//                        Glide.with(itemView).load(chatMessage.userProfile)
-//                            .placeholder(R.drawable.ic_btm_profile) // 로드되기 전에 표시할 이미지
-//                            .error(R.drawable.ic_btm_profile)
-//                            .into(binding.ivChattingOtherProfile)
-//                    } else {
-//                        binding.ivChattingOtherProfile.visibility = View.GONE
-//                    }
                 }
             }
         }

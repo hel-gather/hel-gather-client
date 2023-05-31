@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.helgather.R
+import com.example.helgather.config.ApplicationClass
 import com.example.helgather.config.BaseFragment
 import com.example.helgather.databinding.FragmentRecruitBinding
 import com.example.helgather.src.Main.MainActivity
@@ -153,6 +154,7 @@ class RecruitFragment : BaseFragment<FragmentRecruitBinding>(FragmentRecruitBind
                         bundle.putInt("recruitmentId", response.getRecruitLocationResult[position].recruitmentId)
                         fragment.arguments = bundle
                         parentFragmentManager.beginTransaction().replace(R.id.frm_main,fragment).addToBackStack("recruitDetail").commit()
+
                     }
                 })
                 layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
