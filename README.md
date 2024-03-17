@@ -18,7 +18,9 @@
 * 💪 3대 운동(스쿼트, 벤치 프레스, 데드 리프트)을 인증해 파트너 모집에 지표로 삼습니다.
 * 🎖️ 매일 운동인증을 통해 칭호를 부여합니다.
 
-## 📝협업과정
+<br>
+
+### 📝협업과정
 
 ### 구글 스프레드 시트와 노션을 활용한 스크럼 및 API공유 진행
 
@@ -26,7 +28,7 @@
     - [Notion 링크](https://www.notion.so/hel-gather-66a89ff7e0bd4b08aa8f9b45cb588255?pvs=21)
     - [구글 스프레드 시트](https://docs.google.com/spreadsheets/d/17-fmBPZ63nc6bCQqaylw76ZJjoMvthpS2mK8A2o37AA/edit?usp=sharing)
 
-<hr>
+<br>
 
 ## 팀원소개
 ### 🤖 안드로이드
